@@ -145,19 +145,34 @@ class _WherePageState extends State<WherePage> {
             y = math.sin(sn);
             z = math.cos(sn) * math.sin(ew);
           });
-          if(newCountry == ""){
-            throw "Country Required";
-          }
+
+          showDialog<void>(
+              context: context,
+              builder: (_){
+                return AlertDialog(
+                  title: const Text('Data has been temporarily stored.'),
+                  content: const Text('They are not uploaded yet. please continue to fill in the other fields.'),
+                  actions: <Widget>[
+                    GestureDetector(
+                      child: const Text('OK'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                );
+              });
+
           confirm.country = newCountry;
           confirm.place = newPlace;
           confirm.countryAtThatTime = newCountryAtThatTime;
           confirm.placeAtThatTime = newPlaceAtThatTime;
-          confirm.longitude = newLatitude;
+          confirm.latitude = newLatitude;
           confirm.longitude = newLongitude;
           confirm.x = x;
           confirm.y = y;
           confirm.z = z;
-          print('newCountry');
+          print(newCountry);
         },
         label: const Text('Temporarily Save'),
       ),

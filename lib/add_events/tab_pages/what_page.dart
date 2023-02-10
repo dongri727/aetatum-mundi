@@ -64,9 +64,23 @@ class _WhatPageState extends State<WhatPage> {
 
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          if (newName == "") {
-            throw "Name Required";
-          }
+          showDialog<void>(
+              context: context,
+              builder: (_){
+                return AlertDialog(
+                  title: const Text('Data has been temporarily stored.'),
+                  content: const Text('They are not uploaded yet. please continue to fill in the other fields.'),
+                  actions: <Widget>[
+                    GestureDetector(
+                      child: const Text('OK'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                );
+              });
+
           confirm.name = newName;
           print("save name");
         },

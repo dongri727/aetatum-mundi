@@ -146,16 +146,30 @@ class _WhenPageState extends State<WhenPage> {
           )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          if (newYear == ""){
-            throw "Year Required";
-          }
+          showDialog<void>(
+              context: context,
+              builder: (_){
+                return AlertDialog(
+                  title: const Text('Data has been temporarily stored.'),
+                  content: const Text('They are not uploaded yet. please continue to fill in the other fields.'),
+                  actions: <Widget>[
+                    GestureDetector(
+                      child: const Text('OK'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                );
+              });
+
           confirm.year = newYear;
           confirm.date = newDate;
           confirm.dateExcavation = newDateExcavation;
           confirm.isSelectedCalendar = isSelectedCalendar;
           print("save when");
         },
-        label: const Text('Temporarily Save'),
+        label: const Text('Keep Temporarily'),
       ),
     );
   }
