@@ -1,0 +1,162 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../domain/formats.dart';
+import '../../domain/mundi_theme.dart';
+import '../../domain/confirm.dart';
+
+
+
+class WhenPage extends StatefulWidget {
+  const WhenPage({Key? key}) : super(key: key);
+
+  @override
+  State<WhenPage> createState() => _WhenPageState();
+}
+
+class _WhenPageState extends State<WhenPage> {
+
+  var newYear = 0;
+  var newDate = 0;
+  var newDateExcavation = 0;
+
+  String? isSelectedCalendar = "BeforeSolarSystem";
+
+  @override
+  Widget build(BuildContext context) {
+    final confirm = Provider.of<Confirm>(context);
+    return Scaffold(
+      body: SafeArea(
+          child: Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/both.png'),
+                  fit: BoxFit.cover,
+                )
+            ),
+            child: Center(
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child:  DropdownButton(
+                            alignment: Alignment.center,
+                            dropdownColor: const Color(0x99e6e6fa),
+                            borderRadius: BorderRadius.circular(15.0),
+                            items: [
+                              DropdownMenuItem(
+                                value: 'BeforeSolarSystem',
+                                child: Text(
+                                  'Before Solar System',
+                                  style: MundiTheme.textTheme.bodyMedium,
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 'BeforeLife',
+                                child: Text(
+                                  'Before Life',
+                                  style: MundiTheme.textTheme.bodyMedium,
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 'BeforeHomos',
+                                child: Text(
+                                  'Before Homos',
+                                  style: MundiTheme.textTheme.bodyMedium,
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 'BeforePresent',
+                                child: Text(
+                                  'Before Present',
+                                  style: MundiTheme.textTheme.bodyMedium,
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 'BceCe',
+                                child: Text(
+                                  'Before Common Era, Common Era',
+                                  style: MundiTheme.textTheme.bodyMedium,
+                                ),
+                              ),
+
+                            ], onChanged: (String? value) {
+                            setState(() {
+                              isSelectedCalendar = value;
+                            });
+                          },
+                            value: isSelectedCalendar,
+                          ),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: TffFormat(
+                              hintText: "year",
+                              onChanged: (value) {
+                                newYear = int.parse(value);
+                              },
+                              tffColor1: const Color(0xFF6b8e23),
+                              tffColor2: const Color(0xFF8fbc8f),
+                            )
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: TffFormat(
+                              hintText: "month-date as 0101",
+                              onChanged: (value) {
+                                newDate = int.parse(value);
+                              },
+                              tffColor1: Colors.black54,
+                              tffColor2: Colors.grey,
+                            )
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: TffFormat(
+                              hintText: "dateExcavation as 20230101",
+                              onChanged: (value) {
+                                newDateExcavation = int.parse(value);
+                              },
+                              tffColor1: Colors.black54,
+                              tffColor2: Colors.grey,
+                            )
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [],
+                      )
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [],
+                      )
+                  ),
+                ],
+              ),
+            ),
+          )),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          if (newYear == ""){
+            throw "Year Required";
+          }
+          confirm.year = newYear;
+          confirm.date = newDate;
+          confirm.dateExcavation = newDateExcavation;
+          confirm.isSelectedCalendar = isSelectedCalendar;
+          print("save when");
+        },
+        label: const Text('Temporarily Save'),
+      ),
+    );
+  }
+}
