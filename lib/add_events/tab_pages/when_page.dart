@@ -51,26 +51,26 @@ class _WhenPageState extends State<WhenPage> {
                               DropdownMenuItem(
                                 value: 'BeforeSolarSystem',
                                 child: Text(
-                                  'Before Solar System',
+                                  'Universe Before Solar System',
                                   style: MundiTheme.textTheme.bodyMedium,
                                 ),
                               ),
                               DropdownMenuItem(
                                 value: 'BeforeLife',
                                 child: Text(
-                                  'Before Life',
+                                  'Solar System before Life of the Earth',
                                   style: MundiTheme.textTheme.bodyMedium,
                                 ),
                               ),
                               DropdownMenuItem(
-                                value: 'BeforeHomos',
+                                value: 'BeforeKPgBoundary',
                                 child: Text(
-                                  'Before Homos',
+                                  'Before K-Pg Boundary',
                                   style: MundiTheme.textTheme.bodyMedium,
                                 ),
                               ),
                               DropdownMenuItem(
-                                value: 'BeforePresent',
+                                value: 'Events by Carbon ',
                                 child: Text(
                                   'Before Present',
                                   style: MundiTheme.textTheme.bodyMedium,

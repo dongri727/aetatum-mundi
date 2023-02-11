@@ -7,12 +7,12 @@ class MundiTheme {
         fontSize: 20, fontWeight: FontWeight.normal, color: const Color(0xFFf5f5f5)),
     bodyMedium: GoogleFonts.kalam(
         fontSize: 18, fontWeight: FontWeight.normal, color: const Color(0xFF006400)),
-    headlineLarge: GoogleFonts.kosugiMaru(
-        fontSize: 60, fontWeight: FontWeight.bold, color: Colors.green[800]),
-    headlineMedium: GoogleFonts.kosugiMaru(
-        fontSize: 30, fontWeight: FontWeight.normal, color: Colors.brown),
-    headlineSmall: GoogleFonts.kosugiMaru(
-        fontSize: 20, fontWeight: FontWeight.normal, color: Colors.white70),
+    headlineLarge: GoogleFonts.kalam(
+        fontSize: 60, fontWeight: FontWeight.bold, color: const Color(0xFF006400)),
+    headlineMedium: GoogleFonts.kalam(
+        fontSize: 30, fontWeight: FontWeight.normal, color: const Color(0xFFf5f5f5)),
+    headlineSmall: GoogleFonts.kalam(
+        fontSize: 20, fontWeight: FontWeight.normal, color: const Color(0xFFf5f5f5)),
   );
 
 }
