@@ -16,78 +16,88 @@ class SignupPage extends StatelessWidget {
           child: Consumer<SignupModel>(builder: (context, model, child) {
             return Stack(
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/right.png'),
-                        fit: BoxFit.cover,
-                      )
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Column(
-                      children: [
-                        Text('if this is your first time',
-                          style: MundiTheme.textTheme.headlineMedium
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 30, 20, 100),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/images/right.png'),
+                          fit: BoxFit.cover,
+                        )
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Column(
+                        children: [
+                          Text('if this is your first time',
+                            style: MundiTheme.textTheme.headlineMedium
+                            ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: model.nameController,
+                              decoration: const InputDecoration(
+                                hintText: 'User Name',
+                              ),
+                              onChanged: (text) {
+                                model.setUsername(text);
+                              },
+                            ),
                           ),
-                        TextField(
-                          controller: model.nameController,
-                          decoration: const InputDecoration(
-                            hintText: 'username',
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: model.emailController,
+                              decoration: const InputDecoration(
+                                hintText: 'Email',
+                              ),
+                              onChanged: (text) {
+                                model.setEmail(text);
+                              },
+                            ),
                           ),
-                          onChanged: (text) {
-                            model.setUsername(text);
-                          },
-                        ),
-                        TextField(
-                          controller: model.emailController,
-                          decoration: const InputDecoration(
-                            hintText: 'Email',
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: model.passwordController,
+                              decoration: const InputDecoration(
+                                hintText: 'Password',
+                              ),
+                              obscureText: true,
+                              onChanged: (text) {
+                                model.setPassword(text);
+                              },
+                            ),
                           ),
-                          onChanged: (text) {
-                            model.setEmail(text);
-                          },
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        TextField(
-                          controller: model.passwordController,
-                          decoration: const InputDecoration(
-                            hintText: 'password',
-                          ),
-                          obscureText: true,
-                          onChanged: (text) {
-                            model.setPassword(text);
-                          },
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                          ),
-                          onPressed: () async {
-                            model.startLoading();
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                              ),
+                              onPressed: () async {
+                                model.startLoading();
 
-                            // 追加の処理
-                            try {
-                              await model.signUp();
-                              Navigator.of(context).pop();
-                            } catch (e) {
-                              final snackBar = SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(e.toString()),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            } finally {
-                              model.endLoading();
-                            }
-                          },
-                          child: const Text('sign-up'),
-                        ),
-                      ],
+                                // 追加の処理
+                                try {
+                                  await model.signUp();
+                                  Navigator.of(context).pop();
+                                } catch (e) {
+                                  final snackBar = SnackBar(
+                                    backgroundColor: Colors.red,
+                                    content: Text(e.toString()),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                } finally {
+                                  model.endLoading();
+                                }
+                              },
+                              child: const Text('sign-up'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

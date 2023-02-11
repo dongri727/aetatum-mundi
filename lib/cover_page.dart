@@ -45,7 +45,7 @@ class CoverPage extends StatelessWidget {
                             );
                           },
                           child: Text(
-                            "Sign-Up",
+                            "Login",
                             style: MundiTheme.textTheme.bodyLarge,
                           ),
                         ),
