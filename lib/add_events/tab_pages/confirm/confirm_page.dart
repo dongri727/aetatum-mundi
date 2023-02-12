@@ -23,7 +23,25 @@ class ConfirmPage extends StatelessWidget {
             return Scaffold(
               floatingActionButton: FloatingActionButton.extended(
                   onPressed: () async {
+                    showDialog<void>(
+                        context: context,
+                        builder: (_){
+                          return AlertDialog(
+                            title: const Text('Data has been archived.'),
+                            content: const Text('thank you for the information'),
+                            actions: <Widget>[
+                              GestureDetector(
+                                child: const Text('OK'),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ],
+                          );
+                        });
+
                     await model.save(_confirm);
+
                   },
                   label: const Text('all right ?')),
               body: SafeArea(

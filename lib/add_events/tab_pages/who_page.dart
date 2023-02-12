@@ -178,6 +178,23 @@ class _WhoPageState extends State<WhoPage> {
           )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          showDialog<void>(
+              context: context,
+              builder: (_){
+                return AlertDialog(
+                  title: const Text('Data has been temporarily stored.'),
+                  content: const Text('They are not uploaded yet. please continue to fill in the other fields.'),
+                  actions: <Widget>[
+                    GestureDetector(
+                      child: const Text('OK'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                );
+              });
+
           confirm.selectedWho = _filtersP;
           confirm.selectedIdP = _filtersP;
           print ("$_filtersP");

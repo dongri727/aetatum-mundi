@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:mysql_client/mysql_client.dart';
 import 'package:flutter/material.dart';
 
@@ -27,40 +29,68 @@ class ConfirmModel extends ChangeNotifier {
 
     var period = confirm.isSelectedCalendar;
 
-    // AddFact some rows
-    var result = await conn.execute(
+    // Insert main data into applicable period
+    var resultEvent = await conn.execute(
       "INSERT INTO $period "
-          "(id, annee, affair, country) "
-          "VALUES (:id, :annee, :affair, :country)",
+          "(id, annee, affair, country, created-by)"
+          "VALUES (:id, :annee, :affair, :country, :created-by)",
       {
         "id": null,
         "annee": confirm.year,
         "affair": confirm.name,
         "country": confirm.country,
-        /*
-        "place": confirm.place,
-        "latitude": confirm.latitude,
-        "longitude": confirm.longitude,
-        "x": confirm.x,
-        "y": confirm.y,
-        "z": confirm.z,
-        "date": confirm.date,
-        "dateExcavation": confirm.dateExcavation,
-        "countryAtThatTime": confirm.countryAtThatTime,
-        "placeAtThatTime": confirm.placeAtThatTime,
-
-         */
+        //"created-by": confirm.userID,
       },
     );
 
-    // Get the ID of the last inserted row.
-    var lastInsertedID = result.lastInsertID;
-    print(lastInsertedID);
+    // get period ID
+    var lastInsertedPeriodID = resultEvent.lastInsertID;
+    print(lastInsertedPeriodID);
+
+    //Insert place data into place table
+    var resultPlace = await conn.execute(
+        "INSERT INTO place "
+            "(id, place, latitude, longitude, 3dx, 3dy, 3dz) "
+            "VALUES (:id, :place, :latitude, :longitude, :3dx, :3dy, :3dz)",
+        {
+          "id": nullptr,
+          "place": confirm.place,
+          "latitude": confirm.latitude,
+          "longitude": confirm.longitude,
+          "3dx": confirm.x,
+          "3dy": confirm.y,
+          "3dz": confirm.z,
+        },
+    );
+
+    // get place ID
+    var lastInsertedPlaceID = resultPlace.lastInsertID;
+    print(lastInsertedPlaceID);
+
+    // Insert periodId and placeId into period_place table
+    var resultPP = await conn.execute(
+        "INSERT INTO $period-place (id, $period.id, place.id) VALUE (:id, :$period.id, place.id)",
+      {
+        "id": null,
+        "$period.id": resultEvent.lastInsertID,
+        "place.id": resultPlace.lastInsertID,
+      },
+    );
+
+    //confirm PP ID
+    var lastInsertedPPID = resultPP.lastInsertID;
+    print(lastInsertedPPID);
+
 /*
     var result2 = await conn.execute(
         "INSERT INTO category"
             "id, "
     );
+
+            "date": confirm.date,
+        "dateExcavation": confirm.dateExcavation,
+        "countryAtThatTime": confirm.countryAtThatTime,
+         "placeAtThatTime": confirm.placeAtThatTime,
  */
     // close all connections
     await conn.close();

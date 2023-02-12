@@ -179,6 +179,23 @@ class _TermsPageState extends State<TermsPage> {
           )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          showDialog<void>(
+              context: context,
+              builder: (_){
+                return AlertDialog(
+                  title: const Text('Data has been temporarily stored.'),
+                  content: const Text('They are not uploaded yet. See the whole data in the next Page'),
+                  actions: <Widget>[
+                    GestureDetector(
+                      child: const Text('OK'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                );
+              });
+
           confirm.selectedTerm = _filtersT;
           confirm.selectedIdT = _filtersT;
           print("$_filtersT");
