@@ -128,8 +128,8 @@ class _WhoPageState extends State<WhoPage> {
                                           _filtersP.add(data['selectedId']! + data['selectedWho']!);
                                         }
                                       } else {
-                                        _filtersP.removeWhere((String Who) {
-                                          return Who == data['selectedId']! + data['selectedWho']! ;
+                                        _filtersP.removeWhere((String who) {
+                                          return who == data['selectedId']! + data['selectedWho']! ;
                                         });
                                       }
                                     });

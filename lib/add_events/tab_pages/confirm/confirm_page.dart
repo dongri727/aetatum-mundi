@@ -13,6 +13,7 @@ class ConfirmPage extends StatelessWidget {
 
   final Confirm _confirm;
 
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ConfirmModel>(
@@ -115,36 +116,39 @@ class ConfirmPage extends StatelessWidget {
                               ],
                             ),
                           ),
+
+                          //TODO ListViewに各リストの内容を表示する
                           Expanded(
                             flex: 1,
                             child: SingleChildScrollView(
                                 child:
-                                Column(children: [
+                                Column(children: const [
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(150, 0, 150, 0),
-                                    child: Card(color: const Color(0x99e6e6fa),
+                                    padding: EdgeInsets.fromLTRB(150, 0, 150, 0),
+                                    child: Card(color: Color(0x99e6e6fa),
                                         elevation: 10,
                                         child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.all(8.0),
                                           child: ListTile(
-                                            title: Text('selectedWho'!),
+                                            title: Text('selected participants'),
                                           ),
                                         )
                                     ),
                                   ),
+
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(150, 0, 150, 0),
-                                    child: Card(color: const Color(0x99e6e6fa),
+                                    padding: EdgeInsets.fromLTRB(150, 0, 150, 0),
+                                    child: Card(color: Color(0x99e6e6fa),
                                         elevation: 10,
                                         child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.all(8.0),
                                           child: ListTile(
-                                            title: Text('selecteTerm'!),
+                                            title: Text('selected terms'),
                                           ),
                                         )
                                     ),
-                                  )
-                                ]
+                                  ),
+                                ],
                                 )
                             ),
                           ),
