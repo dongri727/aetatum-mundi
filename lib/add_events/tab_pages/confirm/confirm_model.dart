@@ -33,8 +33,8 @@ class ConfirmModel extends ChangeNotifier {
     // Insert main data into applicable period
     var resultEvent = await conn.execute(
       "INSERT INTO $period "
-          "(id, annee, affair, country, created-by)"
-          "VALUES (:id, :annee, :affair, :country, :created-by)",
+          "(id, annee, affair, country)"
+          "VALUES (:id, :annee, :affair, :country)",
       {
         "id": null,
         "annee": confirm.year,
@@ -70,13 +70,14 @@ class ConfirmModel extends ChangeNotifier {
     var lastInsertedPlaceID = resultPlace.lastInsertID;
     print(lastInsertedPlaceID);
 
-    // Insert periodId and placeId into period-place table
+
+    // Insert $period_id and place_id into period-place table
     var resultPeriodPlace = await conn.execute(
-        "INSERT INTO $period-place (id, $period.id, place.id) VALUE (:id, :$period.id, place.id)",
+        "INSERT INTO place$period (id, period_id, place_id) VALUE (:id, :period_id, :place_id)",
       {
         "id": null,
-        "$period.id": resultEvent.lastInsertID,
-        "place.id": resultPlace.lastInsertID,
+        "period_id": resultEvent.lastInsertID,
+        "place_id": resultPlace.lastInsertID,
       },
     );
 
