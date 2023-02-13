@@ -60,8 +60,8 @@ class _WherePageState extends State<WherePage> {
                                 onChanged: (text) {
                                   newCountry = text;
                                 },
-                                tffColor1: Colors.green,
-                                tffColor2: Colors.lightGreen,
+                                tffColor1: const Color(0xFF2f4f4f),
+                                tffColor2: const Color(0xFF6b8e23),
                               )
                           ),
                           Padding(

@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Aetatum Mundi',
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.indigo,
+        colorSchemeSeed: const Color(0xFF2f4f4f),
         brightness: Brightness.dark,
         //primaryColor: Colors.indigo,
       ),

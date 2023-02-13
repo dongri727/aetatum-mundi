@@ -87,11 +87,10 @@ class ConfirmModel extends ChangeNotifier {
 
     //Insert date data into date table
     var resultDate = await conn.execute(
-        "INSERT INTO Date (id, date, dateExcavation) VALUES (:id, :date, :dateExcavation)",
+        "INSERT INTO Date (id, date) VALUES (:id, :date)",
       {
         "id": null,
         "date": confirm.date,
-        "dateExcavation": confirm.dateExcavation,
       }
     );
 
@@ -99,13 +98,13 @@ class ConfirmModel extends ChangeNotifier {
     var lastInsertedDateID = resultDate.lastInsertID;
     print(lastInsertedDateID);
 
-    // Insert periodId and dateId into period-date table
+    // Insert $period_id and date_id into period-date table
     var resultPeriodDate = await conn.execute(
-        "INSERT INTO $period-date (id, $period.id, date.id) VALUES (:id, $period.id ,date.id)",
+        "INSERT INTO date$period (id, period_id, date.id) VALUES (:id, period_id ,date.id)",
       {
         "id": null,
-        "$period.id": resultEvent.lastInsertID,
-        "date.id": resultDate.lastInsertID,
+        "period_id": resultEvent.lastInsertID,
+        "date_id": resultDate.lastInsertID,
       }
     );
 

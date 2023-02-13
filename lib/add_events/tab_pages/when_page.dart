@@ -20,7 +20,7 @@ class _WhenPageState extends State<WhenPage> {
   var newDate = 0;
   var newDateExcavation = 0;
 
-  String? isSelectedCalendar = "BeforeSolarSystem";
+  String? isSelectedCalendar = "";
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +48,13 @@ class _WhenPageState extends State<WhenPage> {
                             dropdownColor: const Color(0x99e6e6fa),
                             borderRadius: BorderRadius.circular(15.0),
                             items: [
+                              DropdownMenuItem(
+                                value: '',
+                                child: Text(
+                                  'Select a period from the following',
+                                  style: MundiTheme.textTheme.bodyLarge,
+                                ),
+                              ),
                               DropdownMenuItem(
                                 value: 'BeforeSolarSystem',
                                 child: Text(
@@ -95,31 +102,20 @@ class _WhenPageState extends State<WhenPage> {
                         Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: TffFormat(
-                              hintText: "year",
+                              hintText: "year (required)",
                               onChanged: (value) {
                                 newYear = int.parse(value);
                               },
-                              tffColor1: const Color(0xFF6b8e23),
-                              tffColor2: const Color(0xFF8fbc8f),
+                              tffColor1: const Color(0xFF2f4f4f),
+                              tffColor2: const Color(0xFF6b8e23),
                             )
                         ),
                         Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: TffFormat(
-                              hintText: "month-date as 0101",
+                              hintText: "month-date as 0131 (option)",
                               onChanged: (value) {
                                 newDate = int.parse(value);
-                              },
-                              tffColor1: Colors.black54,
-                              tffColor2: Colors.grey,
-                            )
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: TffFormat(
-                              hintText: "dateExcavation as 20230101",
-                              onChanged: (value) {
-                                newDateExcavation = int.parse(value);
                               },
                               tffColor1: Colors.black54,
                               tffColor2: Colors.grey,
