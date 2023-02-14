@@ -84,9 +84,9 @@ class _WhenPageState extends State<WhenPage> {
                                 ),
                               ),
                               DropdownMenuItem(
-                                value: 'BceCe',
+                                value: 'RecordedHistory',
                                 child: Text(
-                                  'Before Common Era, Common Era',
+                                  'Recorded History',
                                   style: MundiTheme.textTheme.bodyMedium,
                                 ),
                               ),
@@ -126,8 +126,35 @@ class _WhenPageState extends State<WhenPage> {
                   ),
                   Expanded(
                       flex: 1,
-                      child: Column(
-                        children: [],
+                      child: Padding(
+                        padding: const EdgeInsets.all(60.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Text(
+                                  style: MundiTheme.textTheme.bodyLarge,
+                                'Hints for YEAR',
+                              ),
+                            ),
+                            const HintText(hintText:
+                                'Ex: -13.8 B \n as Big Bang \n In Universe before Solar System ',
+                            ),
+                            const HintText(hintText:
+                                'Ex: -4540M \n as The Earth is Born \n In Before Life of the Earth ',
+                            ),
+                            const HintText(hintText:
+                                'Ex: -3200M as Cyanobacteria \n In Before K-Pg Boundary \n '
+                            ),
+                            const HintText(hintText:
+                                'Ex: -3180K \n as Lucy (Australopithecus) \n In Before Present \n with Chronological dating'
+                            ),
+                            const HintText(hintText:
+                                'Ex: -9500 \n as Gobekli Tepe \n In Before Present \n with Chronological dating')
+
+                          ],
+                        ),
                       )
                   ),
                   Expanded(

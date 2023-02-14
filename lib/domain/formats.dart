@@ -1,3 +1,4 @@
+import 'package:aetatum_mundi/domain/mundi_theme.dart';
 import 'package:flutter/material.dart';
 
 class TffFormat extends StatelessWidget {
@@ -22,7 +23,7 @@ class TffFormat extends StatelessWidget {
         contentPadding: const EdgeInsets.all(5.0),
         hintText: hintText,
         hintStyle: TextStyle(
-            fontSize: 18,
+            fontSize: 20,
             color: tffColor1),
         fillColor: tffColor2,
         filled: true,
@@ -77,5 +78,27 @@ class ConfirmText extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class HintText extends StatelessWidget {
+  final String hintText;
+
+  const HintText({
+    required this.hintText,
+
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Text(
+        hintText,
+        textAlign: TextAlign.left,
+        style: MundiTheme.textTheme.bodyMedium,
+        ),
+      );
   }
 }
