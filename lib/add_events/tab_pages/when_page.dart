@@ -84,9 +84,9 @@ class _WhenPageState extends State<WhenPage> {
                                 ),
                               ),
                               DropdownMenuItem(
-                                value: 'RecordedHistory',
+                                value: 'HistoricalPeriod',
                                 child: Text(
-                                  'Recorded History',
+                                  'Historical Period',
                                   style: MundiTheme.textTheme.bodyMedium,
                                 ),
                               ),
@@ -99,6 +99,9 @@ class _WhenPageState extends State<WhenPage> {
                             value: isSelectedCalendar,
                           ),
                         ),
+                        const HintText(hintText:
+                        'World Calendar'
+                        ),
                         Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: TffFormat(
@@ -107,7 +110,7 @@ class _WhenPageState extends State<WhenPage> {
                                 newYear = int.parse(value);
                               },
                               tffColor1: const Color(0xFF2f4f4f),
-                              tffColor2: const Color(0xFF6b8e23),
+                              tffColor2: const Color(0x996b8e23),
                             )
                         ),
                         Padding(
@@ -118,8 +121,23 @@ class _WhenPageState extends State<WhenPage> {
                                 newDate = int.parse(value);
                               },
                               tffColor1: Colors.black54,
-                              tffColor2: Colors.grey,
-                            )
+                              tffColor2: const Color(0x66808080),
+                            ),
+                        ),
+
+                        const HintText(hintText:
+                        'Other Calendars'
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: TffFormat(
+                            hintText: "ex: Hijura year-month-date (option)",
+                            onChanged: (value) {
+                              newDate = int.parse(value);
+                            },
+                            tffColor1: Colors.black54,
+                            tffColor2: const Color(0x66808080),
+                          ),
                         ),
                       ],
                     ),
@@ -127,31 +145,39 @@ class _WhenPageState extends State<WhenPage> {
                   Expanded(
                       flex: 1,
                       child: Padding(
-                        padding: const EdgeInsets.all(60.0),
+                        padding: const EdgeInsets.fromLTRB(60, 20, 60, 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(20.0),
+                              padding: const EdgeInsets.all(10.0),
                               child: Text(
                                   style: MundiTheme.textTheme.bodyLarge,
-                                'Hints for YEAR',
+                                'YEAR',
                               ),
                             ),
                             const HintText(hintText:
-                                'Ex: -13.8 B \n as Big Bang \n In Universe before Solar System ',
+                                'Ex: -13.8 (as a Billion years) \n as Big Bang \n In Universe before Solar System ',
                             ),
                             const HintText(hintText:
-                                'Ex: -4540M \n as The Earth is Born \n In Before Life of the Earth ',
+                                'Ex: -4540 (as a Million years)\n as The Earth is Born \n In Before Life of the Earth ',
                             ),
                             const HintText(hintText:
-                                'Ex: -3200M as Cyanobacteria \n In Before K-Pg Boundary \n '
+                                'Ex: -3200 (as a Million years) \n as Cyanobacteria \n In Before K-Pg Boundary'
                             ),
                             const HintText(hintText:
-                                'Ex: -3180K \n as Lucy (Australopithecus) \n In Before Present \n with Chronological dating'
+                                'Ex: -3180 (as a Thousand years)\n as Lucy (Australopithecus) \n In Before Present'
                             ),
                             const HintText(hintText:
-                                'Ex: -9500 \n as Gobekli Tepe \n In Before Present \n with Chronological dating')
+                                'Ex: -9500 \n as Gobekli Tepe \n In Before Present'
+                            ),
+                            const HintText(hintText:
+                                'Ex: -766 \n as The Ancient Olympic Game \n In Historical Period'
+                            ),
+                            const HintText(hintText:
+                                'Ex: 1169 \n as Apollo11 was launched \n in Historical Period'
+                            ),
+
 
                           ],
                         ),
