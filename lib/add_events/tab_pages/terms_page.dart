@@ -66,13 +66,17 @@ class _TermsPageState extends State<TermsPage> {
     await conn.connect();
 
     // insert some rows
-    var res = await conn.execute(
+    var resultTerm = await conn.execute(
       "INSERT INTO term (id, term) VALUES (:id, :term)",
       {
         "id": null, //if you set it auto increment
         "term": newTerm,
       },
     );
+
+    // get period ID
+    var lastInsertedTermID = resultTerm.lastInsertID;
+    print(lastInsertedTermID);
 
     // close all connections
     await conn.close();
@@ -115,7 +119,7 @@ class _TermsPageState extends State<TermsPage> {
                                 newTerm = text;
                               },
                               tffColor1: Colors.black54,
-                              tffColor2: Colors.grey,
+                              tffColor2: const Color(0x66808080),
                             ),
                           ),
                           OutlinedButton(

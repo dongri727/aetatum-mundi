@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../read_search/update_page.dart';
+import 'mundi_theme.dart';
 
 
 class CardGreenA extends StatelessWidget {
@@ -132,6 +133,20 @@ class CardGrey extends StatelessWidget {
                 ),
               )),
         ],
+      ),
+    );
+  }
+}
+
+class TermCard extends StatelessWidget {
+  TermCard(this.term, {super.key});
+  String? term;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(term??"",
+            style: MundiTheme.textTheme.bodyMedium),
       ),
     );
   }

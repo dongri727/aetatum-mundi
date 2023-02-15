@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../domain/card_format.dart';
 import '../../../domain/confirm.dart';
 import '../../../domain/formats.dart';
 import 'confirm_model.dart';
@@ -134,39 +135,36 @@ class ConfirmPage extends StatelessWidget {
                             ),
                           ),
 
-                          //TODO ListViewに各リストの内容を表示する
+                          //TODO 各リストの内容を表示する
                           Expanded(
                             flex: 1,
-                            child: SingleChildScrollView(
-                                child:
-                                Column(children: const [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(150, 0, 150, 0),
-                                    child: Card(color: Color(0x99e6e6fa),
-                                        elevation: 10,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: ListTile(
-                                            title: Text('selected participants'),
-                                          ),
-                                        )
-                                    ),
-                                  ),
-
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(150, 0, 150, 0),
-                                    child: Card(color: Color(0x99e6e6fa),
-                                        elevation: 10,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: ListTile(
-                                            title: Text('selected terms'),
-                                          ),
-                                        )
-                                    ),
-                                  ),
-                                ],
+                            child: Column(children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(150, 0, 150, 0),
+                                child: GridView.builder(
+                                  itemCount: _confirm.selectedTerm.length,
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,),
+                                  itemBuilder: (context, index) {
+                                    return TermCard(
+                                      _confirm.selectedTerm[index]
+                                    );
+                                  }
                                 )
+                              ),
+
+                              const Padding(
+                                padding: EdgeInsets.fromLTRB(150, 0, 150, 0),
+                                child: Card(color: Color(0x99e6e6fa),
+                                    elevation: 10,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: ListTile(
+                                        title: Text('selected terms'),
+                                      ),
+                                    )
+                                ),
+                              ),
+                            ],
                             ),
                           ),
                         ]
