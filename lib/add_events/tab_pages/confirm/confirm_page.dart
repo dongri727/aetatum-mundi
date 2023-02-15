@@ -13,7 +13,6 @@ class ConfirmPage extends StatelessWidget {
 
   final Confirm _confirm;
 
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ConfirmModel>(
@@ -79,7 +78,7 @@ class ConfirmPage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: ConfirmText(
-                                      confirmText: '${_confirm.dateExcavation}',
+                                      confirmText: _confirm.dateLocal,
                                       confirmColor: const Color(0xFF8fbc8f)),
                                 ),
                                 Padding(

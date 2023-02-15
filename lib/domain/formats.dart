@@ -47,9 +47,8 @@ class TffFormat extends StatelessWidget {
   }
 }
 
-
 class ConfirmText extends StatelessWidget {
-  final String confirmText;
+  final String? confirmText;
   final Color confirmColor;
 
   const ConfirmText({
@@ -70,7 +69,7 @@ class ConfirmText extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          confirmText,
+          confirmText??"",
           style: TextStyle(
             fontSize: 20,
             color: confirmColor,

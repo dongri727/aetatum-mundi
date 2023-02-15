@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 
@@ -48,69 +49,73 @@ class ConfirmModel extends ChangeNotifier {
     var lastInsertedPeriodID = resultEvent.lastInsertID;
     print(lastInsertedPeriodID);
 
-    //Insert place data into place table
-    var resultPlace = await conn.execute(
+    //if place data exist, insert place data into place table
+    if(confirm.place != null || confirm.latitude != null || confirm.longitude != null) {
+      var resultPlace = await conn.execute(
         "INSERT INTO Place "
-            "(id, place, countryAtThatTime, placeAtThatTime, latitude, longitude, 3dx, 3dy, 3dz) "
-            "VALUES (:id, :place, :countryAtThatTime, :placeAtThatTime, :latitude, :longitude, :3dx, :3dy, :3dz)",
+            "(id, place, latitude, longitude, 3dx, 3dy, 3dz) "
+            "VALUES (:id, :place, :latitude, :longitude, :3dx, :3dy, :3dz)",
         {
           "id": null,
           "place": confirm.place,
-          "countryAtThatTime": confirm.countryAtThatTime,
-          "placeAtThatTime": confirm.placeAtThatTime,
           "latitude": confirm.latitude,
           "longitude": confirm.longitude,
           "3dx": confirm.x,
           "3dy": confirm.y,
           "3dz": confirm.z,
         },
-    );
+      );
 
-    // get place ID
-    var lastInsertedPlaceID = resultPlace.lastInsertID;
-    print(lastInsertedPlaceID);
+      // get place ID
+      var lastInsertedPlaceID = resultPlace.lastInsertID;
+      print(lastInsertedPlaceID);
 
-
-    // Insert $period_id and place_id into period-place table
-    var resultPeriodPlace = await conn.execute(
+      // Insert $period_id and place_id into period-place table
+      var resultPeriodPlace = await conn.execute(
         "INSERT INTO place$period (id, period_id, place_id) VALUE (:id, :period_id, :place_id)",
-      {
-        "id": null,
-        "period_id": resultEvent.lastInsertID,
-        "place_id": resultPlace.lastInsertID,
-      },
-    );
+        {
+          "id": null,
+          "period_id": resultEvent.lastInsertID,
+          "place_id": resultPlace.lastInsertID,
+        },
+      );
 
-    //confirm PeriodPlace ID
-    var lastInsertedPeriodPlaceID = resultPeriodPlace.lastInsertID;
-    print(lastInsertedPeriodPlaceID);
+      //confirm PeriodPlace ID
+      var lastInsertedPeriodPlaceID = resultPeriodPlace.lastInsertID;
+      print(lastInsertedPeriodPlaceID);
+    }
 
-    //Insert date data into date table
-    var resultDate = await conn.execute(
-        "INSERT INTO Date (id, date) VALUES (:id, :date)",
-      {
-        "id": null,
-        "date": confirm.date,
-      }
-    );
+    //if date data exist, insert date data into date table
+    if(confirm.date != null || confirm.dateLocal != null) {
+      var resultDate = await conn.execute(
+          "INSERT INTO Date (id, date, dateLocal) VALUES (:id, :date, :dateLocal",
+          {
+            "id": null,
+            "date": confirm.date,
+            "dateLocal": confirm.dateLocal,
+          }
+      );
+      //get date ID
+      var lastInsertedDateID = resultDate.lastInsertID;
+      print(lastInsertedDateID);
 
-    //get date ID
-    var lastInsertedDateID = resultDate.lastInsertID;
-    print(lastInsertedDateID);
+      // Insert $period_id and date_id into period-date table
+      var resultPeriodDate = await conn.execute(
+          "INSERT INTO date$period (id, period_id, date.id) VALUES (:id, period_id ,date.id)",
+          {
+            "id": null,
+            "period_id": resultEvent.lastInsertID,
+            "date_id": resultDate.lastInsertID,
+          }
+      );
+      //confirm PeriodDate ID
+      var lastInsertedPeriodDateID = resultPeriodDate;
+      print(lastInsertedPeriodDateID);
+    }
 
-    // Insert $period_id and date_id into period-date table
-    var resultPeriodDate = await conn.execute(
-        "INSERT INTO date$period (id, period_id, date.id) VALUES (:id, period_id ,date.id)",
-      {
-        "id": null,
-        "period_id": resultEvent.lastInsertID,
-        "date_id": resultDate.lastInsertID,
-      }
-    );
 
-    //confirm PeriodDate ID
-    var lastInsertedPeriodDateID = resultPeriodDate;
-    print(lastInsertedPeriodDateID);
+
+
 
     // close all connections
     await conn.close();

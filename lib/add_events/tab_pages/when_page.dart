@@ -18,7 +18,7 @@ class _WhenPageState extends State<WhenPage> {
 
   var newYear = 0;
   var newDate = 0;
-  var newDateExcavation = 0;
+  var newDateLocal = "";
 
   String? isSelectedCalendar = "";
 
@@ -132,8 +132,8 @@ class _WhenPageState extends State<WhenPage> {
                           padding: const EdgeInsets.all(20.0),
                           child: TffFormat(
                             hintText: "ex: Hijura year-month-date (option)",
-                            onChanged: (value) {
-                              newDate = int.parse(value);
+                            onChanged: (text) {
+                              newDateLocal = text;
                             },
                             tffColor1: Colors.black54,
                             tffColor2: const Color(0x66808080),
@@ -214,7 +214,7 @@ class _WhenPageState extends State<WhenPage> {
 
           confirm.year = newYear;
           confirm.date = newDate;
-          confirm.dateExcavation = newDateExcavation;
+          confirm.dateLocal = newDateLocal;
           confirm.isSelectedCalendar = isSelectedCalendar;
           print("save when");
         },
