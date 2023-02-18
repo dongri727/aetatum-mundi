@@ -13,16 +13,19 @@ class SignupModel extends ChangeNotifier {
   String? password;
 
   bool isLoading = false;
+  bool isObscure = true;
 
   void startLoading() {
     isLoading = true;
     notifyListeners();
   }
 
+
   void endLoading() {
     isLoading = false;
     notifyListeners();
   }
+
 
   void setUsername(String username) {
     this.username = username;
@@ -31,6 +34,11 @@ class SignupModel extends ChangeNotifier {
 
   void setEmail(String email) {
     this.email = email;
+    notifyListeners();
+  }
+
+  showPassword() {
+    isObscure = !isObscure;
     notifyListeners();
   }
 

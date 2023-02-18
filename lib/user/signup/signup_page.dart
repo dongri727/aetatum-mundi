@@ -59,12 +59,18 @@ class SignupPage extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: TextField(
+                            child: TextFormField(
                               controller: model.passwordController,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 hintText: 'Password',
+                                suffixIcon: IconButton(
+                                    onPressed: model.showPassword(),
+                                    icon: Icon(model.isObscure
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                    ))
                               ),
-                              obscureText: true,
+                              obscureText: model.isObscure,
                               onChanged: (text) {
                                 model.setPassword(text);
                               },

@@ -13,7 +13,7 @@ class ThreeDViewPage extends StatelessWidget {
         constraints: const BoxConstraints.expand( ),
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/main.png'),
+            image: AssetImage('assets/images/pointers.png'),
             fit: BoxFit.cover,
           ),
         ),

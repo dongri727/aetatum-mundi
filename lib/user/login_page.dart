@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'signup/ask_sign_up.dart';
 import 'signup/signup_page.dart';
 import 'signin/signin_page.dart';
 
@@ -21,7 +22,7 @@ class LoginPage extends StatelessWidget {
           ),
           Expanded(
               flex: 1,
-              child: SignupPage()
+              child: AskSignupPage()
           ),
         ],
       ),

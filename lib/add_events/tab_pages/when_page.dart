@@ -43,7 +43,7 @@ class _WhenPageState extends State<WhenPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child:  DropdownButton(
+                          child: DropdownButton(
                             alignment: Alignment.center,
                             dropdownColor: const Color(0x99e6e6fa),
                             borderRadius: BorderRadius.circular(15.0),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mysql_client/mysql_client.dart';
 import '../domain/.words.dart';
 import '../domain/formats.dart';
+import '../domain/mundi_theme.dart';
 import 'detail_page.dart';
 
 class SearchPage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _SearchPageState extends State<SearchPage> {
   var logique = '';
 
   List<Map<String?, dynamic>> displayList = [];
-  String? isSelectedCalendar = "BeforePresent";
+  String? isSelectedCalendar = '';
 
   Future<void> _Search() async {
     print("Connecting to mysql server...");
@@ -90,16 +91,55 @@ class _SearchPageState extends State<SearchPage> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(50, 15, 50, 5),
-                        child: DropdownButton(items: const [
-                          DropdownMenuItem(
-                            value: 'CommonEra',
-                            child: Text('CommonEra'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'BeforePresent',
-                            child: Text('BeforePresent'),
-                          ),
-                        ], onChanged: (String? value) {
+                        child: DropdownButton(
+                          alignment: Alignment.center,
+                          dropdownColor: const Color(0x99e6e6fa),
+                          borderRadius: BorderRadius.circular(15.0),
+                          items: [
+                            DropdownMenuItem(
+                              value: '',
+                              child: Text(
+                                'Select a period from the following',
+                                style: MundiTheme.textTheme.bodyLarge,
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 'BeforeSolarSystem',
+                              child: Text(
+                                'Universe Before Solar System',
+                                style: MundiTheme.textTheme.bodyMedium,
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 'BeforeLife',
+                              child: Text(
+                                'Solar System before Life of the Earth',
+                                style: MundiTheme.textTheme.bodyMedium,
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 'BeforeKPgBoundary',
+                              child: Text(
+                                'Before K-Pg Boundary',
+                                style: MundiTheme.textTheme.bodyMedium,
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Events by Carbon ',
+                              child: Text(
+                                'Before Present',
+                                style: MundiTheme.textTheme.bodyMedium,
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 'HistoricalPeriod',
+                              child: Text(
+                                'Historical Period',
+                                style: MundiTheme.textTheme.bodyMedium,
+                              ),
+                            ),
+
+                          ], onChanged: (String? value) {
                           setState(() {
                             isSelectedCalendar = value;
                           });
@@ -114,8 +154,8 @@ class _SearchPageState extends State<SearchPage> {
                             onChanged: (text) {
                               targetColumn1 = text;
                             },
-                            tffColor1: Colors.green,
-                            tffColor2: Colors.lightGreen,
+                            tffColor1: const Color(0xFF2f4f4f),
+                            tffColor2: const Color(0x996b8e23),
                           )
                       ),
                       Padding(
@@ -125,16 +165,16 @@ class _SearchPageState extends State<SearchPage> {
                             onChanged: (text) {
                               searchTerm1= text;
                             },
-                            tffColor1: Colors.green,
-                            tffColor2: Colors.lightGreen,
+                            tffColor1: const Color(0xFF2f4f4f),
+                            tffColor2: const Color(0x996b8e23),
                           )
                       ),
 
                       Padding(
                           padding: const EdgeInsets.fromLTRB(50, 5, 50, 5),
                           child: TffFormat(
-                            tffColor1: Colors.green,
-                            tffColor2: Colors.lightGreen,
+                            tffColor1: const Color(0xFF2f4f4f),
+                            tffColor2: const Color(0x996b8e23),
                             hintText: "and / or",
                             onChanged: (text) {
                               logique = text;
@@ -148,8 +188,8 @@ class _SearchPageState extends State<SearchPage> {
                             onChanged: (text) {
                               targetColumn2 = text;
                             },
-                            tffColor1: Colors.green,
-                            tffColor2: Colors.lightGreen,
+                              tffColor1: const Color(0xFF2f4f4f),
+                            tffColor2: const Color(0x996b8e23),
                           )
                       ),
                       Padding(
@@ -159,8 +199,8 @@ class _SearchPageState extends State<SearchPage> {
                             onChanged: (text) {
                               searchTerm2= text;
                             },
-                            tffColor1: Colors.green,
-                            tffColor2: Colors.lightGreen,
+                            tffColor1: const Color(0xFF2f4f4f),
+                            tffColor2: const Color(0x996b8e23),
                           )
                       ),
                     ]),

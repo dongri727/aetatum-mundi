@@ -5,7 +5,6 @@ import 'domain/mundi_theme.dart';
 import 'read_search/read_all_page.dart';
 import 'read_search/search_page.dart';
 import 'user/login_page.dart';
-import 'user/signup/signup_page.dart';
 
 class CoverPage extends StatelessWidget {
   const CoverPage({Key? key}) : super(key: key);
