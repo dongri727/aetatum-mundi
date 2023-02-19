@@ -20,7 +20,17 @@ class _WhenPageState extends State<WhenPage> {
   var newDate = 0;
   var newDateLocal = "";
 
-  String? isSelectedCalendar = "";
+  String? isSelectedCalendar = 'Select a period from the following';
+
+  List<String> periods = <String>[
+    'Select a period from the following',
+    'Universe Before Solar System',
+    'Solar System before Life of the Earth',
+    'The Earth Before K-Pg Boundary',
+    'Before Hominina'
+    'Before Present',
+    'Historical Period',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -43,60 +53,31 @@ class _WhenPageState extends State<WhenPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: DropdownButton(
-                            alignment: Alignment.center,
-                            dropdownColor: const Color(0x99e6e6fa),
-                            borderRadius: BorderRadius.circular(15.0),
-                            items: [
-                              DropdownMenuItem(
-                                value: '',
-                                child: Text(
-                                  'Select a period from the following',
-                                  style: MundiTheme.textTheme.bodyLarge,
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'BeforeSolarSystem',
-                                child: Text(
-                                  'Universe Before Solar System',
-                                  style: MundiTheme.textTheme.bodyMedium,
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'BeforeLife',
-                                child: Text(
-                                  'Solar System before Life of the Earth',
-                                  style: MundiTheme.textTheme.bodyMedium,
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'BeforeKPgBoundary',
-                                child: Text(
-                                  'Before K-Pg Boundary',
-                                  style: MundiTheme.textTheme.bodyMedium,
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'Events by Carbon ',
-                                child: Text(
-                                  'Before Present',
-                                  style: MundiTheme.textTheme.bodyMedium,
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'HistoricalPeriod',
-                                child: Text(
-                                  'Historical Period',
-                                  style: MundiTheme.textTheme.bodyMedium,
-                                ),
-                              ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              color: const Color(0x99e6e6fa),
+                            ),
+                            child: DropdownButton<String>(
+                              value: isSelectedCalendar,
+                              alignment: Alignment.center,
+                              dropdownColor: const Color(0x99e6e6fa),
+                              borderRadius: BorderRadius.circular(15.0),
 
-                            ], onChanged: (String? value) {
-                            setState(() {
-                              isSelectedCalendar = value;
-                            });
-                          },
-                            value: isSelectedCalendar,
+                              onChanged: (String? value) {
+                                setState(() {
+                                  isSelectedCalendar = value;
+                                });
+                              },
+                              items: periods.map<DropdownMenuItem<String>>((String value){
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                    child: Text(
+                                      style: MundiTheme.textTheme.bodyMedium,
+                                      value),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
                         const HintText(hintText:
@@ -109,7 +90,7 @@ class _WhenPageState extends State<WhenPage> {
                               onChanged: (value) {
                                 newYear = int.parse(value);
                               },
-                              tffColor1: const Color(0xFF2f4f4f),
+                              tffColor1: Colors.black54,
                               tffColor2: const Color(0x996b8e23),
                             )
                         ),
@@ -166,10 +147,10 @@ class _WhenPageState extends State<WhenPage> {
                                 'Ex: -3200 (as a Million years) \n as Cyanobacteria \n In Before K-Pg Boundary'
                             ),
                             const HintText(hintText:
-                                'Ex: -3180 (as a Thousand years)\n as Lucy (Australopithecus) \n In Before Present'
+                                'Ex: -3180 (as a Thousand years)\n as Lucy (Australopithecus) \n In Before Holocene'
                             ),
                             const HintText(hintText:
-                                'Ex: -9500 \n as Gobekli Tepe \n In Before Present'
+                                'Ex: -9500 \n as Gobekli Tepe \n In Holocene'
                             ),
                             const HintText(hintText:
                                 'Ex: -766 \n as The Ancient Olympic Game \n In Historical Period'

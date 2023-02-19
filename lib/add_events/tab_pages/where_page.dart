@@ -19,7 +19,7 @@ class WherePage extends StatefulWidget {
 
 class _WherePageState extends State<WherePage> {
 
-  var newCountry = '';
+  //var newCountry = '';
   var newPlace = '';
   var newLatitude = 0.0;
   var newLongitude = 0.0;
@@ -29,7 +29,7 @@ class _WherePageState extends State<WherePage> {
   double y = 0.0;
   double z = 0.0;
 
-  String? isSelectedPay = 'Where did it happened ?';
+  String isSelectedPay = 'Where did it happened ?';
 
   List<String> countries = <String>[
     'Where did it happened ?',
@@ -255,23 +255,31 @@ class _WherePageState extends State<WherePage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: DropdownButton<String>(
-                            value: isSelectedPay,
-                            alignment: Alignment.center,
-                            dropdownColor: const Color(0x99e6e6fa),
-                            borderRadius: BorderRadius.circular(15.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              color: const Color(0x99e6e6fa),
+                            ),
+                            child: DropdownButton<String>(
+                              value: isSelectedPay,
+                              alignment: Alignment.center,
+                              dropdownColor: const Color(0x99e6e6fa),
+                              borderRadius: BorderRadius.circular(15.0),
 
-                            onChanged: (String? value) {
-                              setState(() {
-                                newCountry = value!;
-                              });
-                            },
-                            items: countries.map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                              onChanged: (String? value) {
+                                setState(() {
+                                  isSelectedPay = value!;
+                                });
+                              },
+                              items: countries.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                      style: MundiTheme.textTheme.bodyMedium,
+                                      value),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
                       ],
@@ -282,6 +290,7 @@ class _WherePageState extends State<WherePage> {
                       flex: 1,
                       child: Column(
                         children: [
+                          /*
                           Padding(
                               padding: const EdgeInsets.all(20.0),
                               child: TffFormat(
@@ -293,6 +302,7 @@ class _WherePageState extends State<WherePage> {
                                 tffColor2: const Color(0xFF6b8e23),
                               )
                           ),
+                           */
                           Padding(
                               padding: const EdgeInsets.all(20.0),
                               child: TffFormat(
@@ -392,7 +402,7 @@ class _WherePageState extends State<WherePage> {
                 );
               });
 
-          confirm.country = newCountry;
+          confirm.country = isSelectedPay;
           confirm.place = newPlace;
           confirm.countryAtThatTime = newCountryAtThatTime;
           confirm.placeAtThatTime = newPlaceAtThatTime;
@@ -401,7 +411,7 @@ class _WherePageState extends State<WherePage> {
           confirm.x = x;
           confirm.y = y;
           confirm.z = z;
-          print(newCountry);
+          print(isSelectedPay);
         },
         label: const Text('Temporarily Save'),
       ),
