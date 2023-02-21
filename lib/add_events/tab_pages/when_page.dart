@@ -20,16 +20,14 @@ class _WhenPageState extends State<WhenPage> {
   var newDate = 0;
   var newDateLocal = "";
 
-  String? isSelectedCalendar = 'Select a period from the following';
+  String? isSelectedCalendar = 'HistoricalYears';
 
   List<String> periods = <String>[
-    'Select a period from the following',
-    'Universe Before Solar System',
-    'Solar System before Life of the Earth',
-    'The Earth Before K-Pg Boundary',
-    'Before Hominina'
-    'Before Present',
-    'Historical Period',
+    'BillionYears',
+    'MillionYears',
+    'ThousandYears'
+    'YearsByDating Methods',
+    'HistoricalYears',
   ];
 
   @override
@@ -51,6 +49,12 @@ class _WhenPageState extends State<WhenPage> {
                     flex: 1,
                     child: Column(
                       children: [
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                          child: HintText(hintText:
+                          'Select a format from the following'
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Container(
@@ -138,28 +142,18 @@ class _WhenPageState extends State<WhenPage> {
                               ),
                             ),
                             const HintText(hintText:
-                                'Ex: -13.8 (as a Billion years) \n as Big Bang \n In Universe before Solar System ',
-                            ),
+                                'Ex: -13.8 (as Billion years) \n as Big Bang'),
                             const HintText(hintText:
-                                'Ex: -4540 (as a Million years)\n as The Earth is Born \n In Before Life of the Earth ',
-                            ),
+                                'Ex: -3200 (as Million years) \n as Cyanobacteria'),
                             const HintText(hintText:
-                                'Ex: -3200 (as a Million years) \n as Cyanobacteria \n In Before K-Pg Boundary'
-                            ),
+                                'Ex: -3180 (as Thousand years)\n as Lucy (Australopithecus)'),
                             const HintText(hintText:
-                                'Ex: -3180 (as a Thousand years)\n as Lucy (Australopithecus) \n In Before Holocene'
-                            ),
+                                'Ex: -9500 by dating methods\n as Gobekli Tepe'),
                             const HintText(hintText:
-                                'Ex: -9500 \n as Gobekli Tepe \n In Holocene'
-                            ),
+                                'Ex: -766 \n as The Ancient Olympic Game'),
                             const HintText(hintText:
-                                'Ex: -766 \n as The Ancient Olympic Game \n In Historical Period'
+                                'Ex: 1169 \n as Apollo11 was launched \n'
                             ),
-                            const HintText(hintText:
-                                'Ex: 1169 \n as Apollo11 was launched \n in Historical Period'
-                            ),
-
-
                           ],
                         ),
                       )
@@ -167,7 +161,21 @@ class _WhenPageState extends State<WhenPage> {
                   Expanded(
                       flex: 1,
                       child: Column(
-                        children: [],
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              style: MundiTheme.textTheme.bodyLarge,
+                              'Month-Date',
+                            ),
+                          ),
+                          const HintText(hintText:
+                          ''),
+                          const HintText(hintText:
+                          ''),
+                          const HintText(hintText:
+                          ''),
+                        ],
                       )
                   ),
                 ],

@@ -1,3 +1,5 @@
+import 'package:aetatum_mundi/domain/.words.dart';
+import 'package:aetatum_mundi/read_search/update_page.dart';
 import 'package:flutter/material.dart';
 import 'package:mysql_client/mysql_client.dart';
 import '../domain/card_format.dart';
@@ -25,8 +27,8 @@ class _DetailPageState extends State<DetailPage> {
     final conn = await MySQLConnection.createConnection(
       host: "127.0.0.1",
       port: 3306,
-      userName: "root",
-      password: "Susian912@sql",
+      userName: NAME,
+      password: PASSWORD,
       databaseName: "aetatum",
     );
 

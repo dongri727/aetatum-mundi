@@ -1,3 +1,4 @@
+import 'package:aetatum_mundi/domain/mundi_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -140,30 +141,44 @@ class ConfirmPage extends StatelessWidget {
                         flex: 1,
                         child: Column(children: [
                           Padding(
+                            padding: const EdgeInsets.fromLTRB(30, 50, 30, 8),
+                            child: Text('Participants',
+                            style: MundiTheme.textTheme.headlineSmall),
+                          ),
+                          Padding(
                               padding: const EdgeInsets.fromLTRB(
-                                  150, 0, 150, 0),
+                                  30, 8, 30, 8),
                               child: GridView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount: _confirm.selectedWho.length,
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2),
+                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: (MediaQuery.of(context)
+                                        .size
+                                        .height/300)
+                                  ),
                                   itemBuilder: (context, index) {
                                     return TermCard(
-                                        _confirm.selectedWho[index]
+                                        _confirm.selectedWho[index],
                                     );
                                   }
                               )
                           ),
                           Padding(
+                            padding: const EdgeInsets.fromLTRB(30, 30, 30, 8),
+                            child: Text('Category',
+                                style: MundiTheme.textTheme.headlineSmall),
+                          ),
+                          Padding(
                               padding: const EdgeInsets.fromLTRB(
-                                  150, 0, 150, 0),
-                              child: GridView.builder(
+                                  30, 8, 30, 8),
+                              child: ListView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount: _confirm.selectedTerm.length,
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2),
+                                  //gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  //  crossAxisCount: 2),
                                   itemBuilder: (context, index) {
                                     return TermCard(
                                         _confirm.selectedTerm[index]

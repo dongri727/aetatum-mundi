@@ -68,7 +68,7 @@ class _WhoPageState extends State<WhoPage> {
     // insert some rows
     var res = await conn.execute(
       "INSERT INTO Participants (id, participant) VALUES (:id, :participant)",
-      {
+      <String, dynamic>{
         "id": null, //if you set it auto increment
         "participant": newWho,
       },
@@ -120,16 +120,17 @@ class _WhoPageState extends State<WhoPage> {
                               children: displayList.map<Widget>((data) {
                                 return FilterChip(
                                   label: Text(data['selectedWho'] ?? ""),
-                                  selected: _filtersP.contains(data['selectedId']! + data['selectedWho']!),
+                                  //selected: _filtersP.contains(data['selectedId']! + data['selectedWho']!),
+                                  selected: _filtersP.contains(data['selectedWho']!),
                                   onSelected: (bool value) {
                                     setState(() {
                                       if (value) {
-                                        if (!_filtersP.contains(data['selectedId']! + data['selectedWho']!)) {
-                                          _filtersP.add(data['selectedId']! + data['selectedWho']!);
+                                        if (!_filtersP.contains(data['selectedWho']!)) {
+                                          _filtersP.add(data['selectedWho']!);
                                         }
                                       } else {
                                         _filtersP.removeWhere((String who) {
-                                          return who == data['selectedId']! + data['selectedWho']! ;
+                                          return who == data[data['selectedWho']]!;
                                         });
                                       }
                                     });

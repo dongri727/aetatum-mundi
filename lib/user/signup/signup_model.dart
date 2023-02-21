@@ -37,7 +37,7 @@ class SignupModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  showPassword() {
+  dynamic showPassword() {
     isObscure = !isObscure;
     notifyListeners();
   }
@@ -75,7 +75,7 @@ class SignupModel extends ChangeNotifier {
           "INSERT INTO user "
               "(id, username, email, password) "
               "VALUES (:id, :username, :email, :password)",
-          {
+          <String, dynamic>{
             "id": null,
             "username": username,
             "email": email,

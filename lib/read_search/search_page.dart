@@ -24,7 +24,8 @@ class _SearchPageState extends State<SearchPage> {
   var logique = '';
 
   List<Map<String?, dynamic>> displayList = [];
-  String? isSelectedCalendar = '';
+
+  String? isSelectedCalendar = 'BillionYears';
 
   Future<void> _Search() async {
     print("Connecting to mysql server...");
@@ -46,8 +47,6 @@ class _SearchPageState extends State<SearchPage> {
     var result = await conn.execute(
         "SELECT * FROM $isSelectedCalendar WHERE $targetColumn1 = '$searchTerm1' $logique $targetColumn2 = '$searchTerm2' ORDER BY year ASC");
 
-
-
     List<Map<String?, dynamic>> list = [];
     for (final row in result.rows) {
       final data = {
@@ -67,6 +66,14 @@ class _SearchPageState extends State<SearchPage> {
     // close all connections
     await conn.close();
   }
+
+  List<String> periods = <String>[
+    'BillionYears',
+    'MillionYears',
+    'ThousandYears',
+    'YearsByDatingMethods',
+    'HistoricalYears',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -90,63 +97,35 @@ class _SearchPageState extends State<SearchPage> {
                 child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(50, 15, 50, 5),
-                        child: DropdownButton(
-                          alignment: Alignment.center,
-                          dropdownColor: const Color(0x99e6e6fa),
-                          borderRadius: BorderRadius.circular(15.0),
-                          items: [
-                            DropdownMenuItem(
-                              value: '',
-                              child: Text(
-                                'Select a period from the following',
-                                style: MundiTheme.textTheme.bodyLarge,
-                              ),
-                            ),
-                            DropdownMenuItem(
-                              value: 'BeforeSolarSystem',
-                              child: Text(
-                                'Universe Before Solar System',
-                                style: MundiTheme.textTheme.bodyMedium,
-                              ),
-                            ),
-                            DropdownMenuItem(
-                              value: 'BeforeLife',
-                              child: Text(
-                                'Solar System before Life of the Earth',
-                                style: MundiTheme.textTheme.bodyMedium,
-                              ),
-                            ),
-                            DropdownMenuItem(
-                              value: 'BeforeKPgBoundary',
-                              child: Text(
-                                'Before K-Pg Boundary',
-                                style: MundiTheme.textTheme.bodyMedium,
-                              ),
-                            ),
-                            DropdownMenuItem(
-                              value: 'Events by Carbon ',
-                              child: Text(
-                                'Before Present',
-                                style: MundiTheme.textTheme.bodyMedium,
-                              ),
-                            ),
-                            DropdownMenuItem(
-                              value: 'HistoricalPeriod',
-                              child: Text(
-                                'Historical Period',
-                                style: MundiTheme.textTheme.bodyMedium,
-                              ),
-                            ),
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: const Color(0x99e6e6fa),
+                          ),
+                          child: DropdownButton<String>(
+                            value: isSelectedCalendar,
+                            alignment: Alignment.center,
+                            dropdownColor: const Color(0x99e6e6fa),
+                            borderRadius: BorderRadius.circular(15.0),
 
-                          ], onChanged: (String? value) {
-                          setState(() {
-                            isSelectedCalendar = value;
-                          });
-                        },
-                          value: isSelectedCalendar,
+                            onChanged: (String? value) {
+                              setState(() {
+                                isSelectedCalendar = value;
+                              });
+                            },
+                            items: periods.map<DropdownMenuItem<String>>((String value){
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                    style: MundiTheme.textTheme.bodyMedium,
+                                    value),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
+
                       Padding(
                           padding: const EdgeInsets.fromLTRB(50, 15, 50, 5),
                           child: TffFormat(
@@ -218,7 +197,7 @@ class _SearchPageState extends State<SearchPage> {
                           trailing: TextButton(
                             child: const Text("detail"),
                             onPressed: () {
-                              Navigator.push(
+                              Navigator.push<int>(
                                 context,
                                 MaterialPageRoute(builder: (context) => DetailPage(title: data['SelectedId']??"")),
                               );

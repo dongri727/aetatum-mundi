@@ -68,7 +68,7 @@ class _TermsPageState extends State<TermsPage> {
     // insert some rows
     var resultTerm = await conn.execute(
       "INSERT INTO term (id, term) VALUES (:id, :term)",
-      {
+      <String, dynamic>{
         "id": null, //if you set it auto increment
         "term": newTerm,
       },
@@ -148,16 +148,17 @@ class _TermsPageState extends State<TermsPage> {
                               children: displayList.map<Widget>((data) {
                                 return FilterChip(
                                   label: Text(data['selectedTerm']?? ""),
-                                  selected: _filtersT.contains(data['selectedId']! + data['selectedTerm']!),
+                                  //selected: _filtersT.contains(data['selectedId']! + data['selectedTerm']!),
+                                  selected: _filtersT.contains(data['selectedTerm']!),
                                   onSelected: (bool value) {
                                     setState(() {
                                       if (value) {
-                                        if (!_filtersT.contains(data['selectedId']! + data['selectedTerm']!)) {
-                                          _filtersT.add(data['selectedId']! + data['selectedTerm']!);
+                                        if (!_filtersT.contains(data['selectedTerm']!)) {
+                                          _filtersT.add(data['selectedTerm']!);
                                         }
                                       } else {
                                         _filtersT.removeWhere((String term) {
-                                          return term == data['selectedId']! + data['selectedTerm']!;
+                                          return term == data['selectedTerm']!;
                                         });
                                       }
                                     });

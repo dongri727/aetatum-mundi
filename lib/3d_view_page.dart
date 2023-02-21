@@ -19,7 +19,7 @@ class ThreeDViewPage extends StatelessWidget {
         ),
         child: OutlinedButton(
           onPressed: () {
-            Navigator.push(
+            Navigator.push<String>(
               context,
               CustomPageRoute(
                 const CoverPage(),

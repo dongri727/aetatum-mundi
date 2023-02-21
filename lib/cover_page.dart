@@ -36,7 +36,7 @@ class CoverPage extends StatelessWidget {
                         padding: const EdgeInsets.all(20.0),
                         child: OutlinedButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.push<String>(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const LoginPage(),
@@ -53,7 +53,7 @@ class CoverPage extends StatelessWidget {
                         padding: const EdgeInsets.all(20.0),
                         child: OutlinedButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.push<String>(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const TabPage(),
@@ -71,7 +71,7 @@ class CoverPage extends StatelessWidget {
                         padding: const EdgeInsets.all(20.0),
                         child: OutlinedButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.push<String>(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const ThreeDViewPage(),
@@ -88,7 +88,7 @@ class CoverPage extends StatelessWidget {
                         padding: const EdgeInsets.all(20.0),
                         child: OutlinedButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.push<String>(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const ReadAllPage(title: "Read and Update"),
@@ -105,7 +105,7 @@ class CoverPage extends StatelessWidget {
                         padding: const EdgeInsets.all(20.0),
                         child: OutlinedButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.push<String>(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const SearchPage(title: "Search"),

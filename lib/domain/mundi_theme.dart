@@ -16,10 +16,11 @@ class MundiTheme {
     headlineSmall: GoogleFonts.kalam(
         fontSize: 18, fontWeight: FontWeight.normal, color: const Color(0xFFa9a9a9)),
     bodyLarge: GoogleFonts.kalam(
-        fontSize: 20, fontWeight: FontWeight.normal, color: const Color(0xFFf5f5f5)),
+        fontSize: 20, fontWeight: FontWeight.normal, color: const Color(0xFFf5f5f5)),//white
     bodyMedium: GoogleFonts.kalam(
-        fontSize: 18, fontWeight: FontWeight.normal, color: const Color(0xFF006400)),
-
+        fontSize: 18, fontWeight: FontWeight.normal, color: const Color(0xFF006400)),//green
+    bodySmall: GoogleFonts.kalam(
+      fontSize: 18, fontWeight: FontWeight.normal, color: const Color(0xFFf5f5f5)),//white
   );
 
 }

@@ -28,7 +28,7 @@ class AskSignupPage extends StatelessWidget {
                   style: MundiTheme.textTheme.headlineMedium),
                   ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.push<String>(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const SignupPage(),

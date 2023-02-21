@@ -124,10 +124,12 @@ class CardGrey extends StatelessWidget {
                   child: const Text("add"),
                   onPressed: () {
                     if (textB == "") {
-                      Navigator.push(
+                      Navigator.push<String>(
                         context,
-                        MaterialPageRoute(builder: (context) => const UpdatePage(title: "")),
-                      );
+                          MaterialPageRoute(
+                            builder: (context) => const UpdatePage(title: "Update"),
+                          )
+                        );
                     } else {null;}
                   },
                 ),
@@ -144,9 +146,10 @@ class TermCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: const Color(0x99e6e6fa),
       child: ListTile(
         title: Text(term??"",
-            style: MundiTheme.textTheme.bodyMedium),
+            style: MundiTheme.textTheme.bodyLarge),
       ),
     );
   }

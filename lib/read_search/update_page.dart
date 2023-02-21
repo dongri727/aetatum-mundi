@@ -37,7 +37,7 @@ class _UpdatePageState extends State<UpdatePage> {
     // update some rows
     var res = await conn.execute(
       "UPDATE BceCe SET $targetTerm = :$targetTerm WHERE id = $targetId",
-      {
+      <String, dynamic>{
         targetTerm: newTerm,
       },
     );

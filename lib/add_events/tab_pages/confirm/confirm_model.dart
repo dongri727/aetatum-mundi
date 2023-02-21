@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:mysql_client/mysql_client.dart';
-import 'package:flutter/material.dart';
 
 import '../../../domain/confirm.dart';
 import '../../../domain/.words.dart';
@@ -14,7 +10,9 @@ class ConfirmModel extends ChangeNotifier {
 
   //insert into DB
   Future<void> save(Confirm confirm) async {
-    print("Connecting to mysql server...");
+    if (kDebugMode) {
+      print("Connecting to mysql server...");
+    }
 
     // create connection
     final conn = await MySQLConnection.createConnection(
@@ -27,7 +25,9 @@ class ConfirmModel extends ChangeNotifier {
 
     await conn.connect();
 
-    print("Connected");
+    if (kDebugMode) {
+      print("Connected");
+    }
 
     var period = confirm.isSelectedCalendar;
 
@@ -36,7 +36,7 @@ class ConfirmModel extends ChangeNotifier {
       "INSERT INTO $period "
           "(id, annee, affair, country)"
           "VALUES (:id, :annee, :affair, :country)",
-      {
+      <String, dynamic>{
         "id": null,
         "annee": confirm.year,
         "affair": confirm.name,
@@ -55,7 +55,7 @@ class ConfirmModel extends ChangeNotifier {
         "INSERT INTO Place "
             "(id, place, latitude, longitude, 3dx, 3dy, 3dz) "
             "VALUES (:id, :place, :latitude, :longitude, :3dx, :3dy, :3dz)",
-        {
+        <String, dynamic>{
           "id": null,
           "place": confirm.place,
           "latitude": confirm.latitude,
@@ -68,12 +68,14 @@ class ConfirmModel extends ChangeNotifier {
 
       // get place ID
       var lastInsertedPlaceID = resultPlace.lastInsertID;
-      print(lastInsertedPlaceID);
+      if (kDebugMode) {
+        print(lastInsertedPlaceID);
+      }
 
       // Insert $period_id and place_id into period-place table
       var resultPeriodPlace = await conn.execute(
         "INSERT INTO place$period (id, period_id, place_id) VALUE (:id, :period_id, :place_id)",
-        {
+        <String, dynamic>{
           "id": null,
           "period_id": resultEvent.lastInsertID,
           "place_id": resultPlace.lastInsertID,
@@ -82,14 +84,16 @@ class ConfirmModel extends ChangeNotifier {
 
       //confirm PeriodPlace ID
       var lastInsertedPeriodPlaceID = resultPeriodPlace.lastInsertID;
-      print(lastInsertedPeriodPlaceID);
+      if (kDebugMode) {
+        print(lastInsertedPeriodPlaceID);
+      }
     }
 
     //if date data exist, insert date data into date table
     if(confirm.date != null || confirm.dateLocal != null) {
       var resultDate = await conn.execute(
           "INSERT INTO Date (id, date, dateLocal) VALUES (:id, :date, :dateLocal",
-          {
+          <String, dynamic>{
             "id": null,
             "date": confirm.date,
             "dateLocal": confirm.dateLocal,
@@ -97,12 +101,14 @@ class ConfirmModel extends ChangeNotifier {
       );
       //get date ID
       var lastInsertedDateID = resultDate.lastInsertID;
-      print(lastInsertedDateID);
+      if (kDebugMode) {
+        print(lastInsertedDateID);
+      }
 
       // Insert $period_id and date_id into period-date table
       var resultPeriodDate = await conn.execute(
           "INSERT INTO date$period (id, period_id, date.id) VALUES (:id, period_id ,date.id)",
-          {
+          <String, dynamic>{
             "id": null,
             "period_id": resultEvent.lastInsertID,
             "date_id": resultDate.lastInsertID,
@@ -110,13 +116,11 @@ class ConfirmModel extends ChangeNotifier {
       );
       //confirm PeriodDate ID
       var lastInsertedPeriodDateID = resultPeriodDate;
-      print(lastInsertedPeriodDateID);
+      if (kDebugMode) {
+        print(lastInsertedPeriodDateID);
+      }
     }
-
-
-
-
-
+    
     // close all connections
     await conn.close();
   }

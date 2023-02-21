@@ -16,7 +16,7 @@ class ReadAllPage extends StatefulWidget {
 class _ReadAllPageState extends State<ReadAllPage> {
 
   List<Map<String, String>> displayList = [];
-  String? isSelectedCalendar = "BceCe";
+  String? isSelectedCalendar = "HistoricalYears";
 
   Future<void> _readAll() async {
     print("Connecting to mysql server...");
@@ -39,7 +39,7 @@ class _ReadAllPageState extends State<ReadAllPage> {
 
     // print some result data
     print(result.numOfColumns);
-    print(result.numOfRows);
+ 
 
     // print query result
     List<Map<String, String>> list = [];
@@ -62,6 +62,14 @@ class _ReadAllPageState extends State<ReadAllPage> {
     await conn.close();
   }
 
+  List<String> periods = <String>[
+    'BillionYears',
+    'MillionYears',
+    'ThousandYears',
+    'YearsByDatingMethods',
+    'HistoricalYears',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,52 +89,34 @@ class _ReadAllPageState extends State<ReadAllPage> {
             children: [
               Expanded(
                 flex: 1,
-                child: DropdownButton(
-                  alignment: Alignment.center,
-                  dropdownColor: const Color(0x99e6e6fa),
-                  borderRadius: BorderRadius.circular(15.0),
-                  items: [
-                    DropdownMenuItem(
-                      value: 'BeforeSolarSystem',
-                      child: Text(
-                        'Before Solar System',
-                        style: MundiTheme.textTheme.bodyMedium,
-                      ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: const Color(0x99e6e6fa),
                     ),
-                    DropdownMenuItem(
-                      value: 'BeforeLife',
-                      child: Text(
-                        'Before Life',
-                        style: MundiTheme.textTheme.bodyMedium,
-                      ),
+                    child: DropdownButton<String>(
+                      value: isSelectedCalendar,
+                      alignment: Alignment.center,
+                      dropdownColor: const Color(0x99e6e6fa),
+                      borderRadius: BorderRadius.circular(15.0),
+
+                      onChanged: (String? value) {
+                        setState(() {
+                          isSelectedCalendar = value;
+                        });
+                      },
+                      items: periods.map<DropdownMenuItem<String>>((String value){
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                              style: MundiTheme.textTheme.bodyMedium,
+                              value),
+                        );
+                      }).toList(),
                     ),
-                    DropdownMenuItem(
-                      value: 'BeforeHomos',
-                      child: Text(
-                        'Before Homos',
-                        style: MundiTheme.textTheme.bodyMedium,
-                      ),
-                    ),
-                    DropdownMenuItem(
-                      value: 'BeforePresent',
-                      child: Text(
-                        'Before Present',
-                        style: MundiTheme.textTheme.bodyMedium,
-                      ),
-                    ),
-                    DropdownMenuItem(
-                      value: 'BceCe',
-                      child: Text(
-                        'Before Common Era, Common Era',
-                        style: MundiTheme.textTheme.bodyMedium,
-                      ),
-                    ),
-                  ], onChanged: (String? value) {
-                  setState(() {
-                    isSelectedCalendar = value;
-                  });
-                },
-                  value: isSelectedCalendar,
+                  ),
                 ),
               ),
               Expanded(
@@ -136,7 +126,7 @@ class _ReadAllPageState extends State<ReadAllPage> {
                   Column(children: displayList.map<Widget>((data) {
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(150, 0, 150, 0),
-                      child: Card(color: const Color(0x99e6e6fa),
+                      child: Card(color: const Color(0x66006400),
                           elevation: 10,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -147,7 +137,7 @@ class _ReadAllPageState extends State<ReadAllPage> {
                               trailing: TextButton(
                                 child: const Text("update"),
                                 onPressed: () {
-                                  Navigator.push(
+                                  Navigator.push<int>(
                                     context,
                                     MaterialPageRoute(builder: (context) => UpdatePage(title: data['selectedId']??"")),
                                   );
