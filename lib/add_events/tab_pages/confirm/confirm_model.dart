@@ -72,20 +72,20 @@ class ConfirmModel extends ChangeNotifier {
         print(lastInsertedPlaceID);
       }
 
-      // Insert $period_id and place_id into period-place table
-      var resultPeriodPlace = await conn.execute(
-        "INSERT INTO place$period (id, period_id, place_id) VALUE (:id, :period_id, :place_id)",
+      // Insert $period_id and place_id into place$period table
+      var resultPlacePeriod = await conn.execute(
+        "INSERT INTO place$period (id, periodId, placeId) VALUE (:id, :periodId, :placeId)",
         <String, dynamic>{
           "id": null,
-          "period_id": resultEvent.lastInsertID,
-          "place_id": resultPlace.lastInsertID,
+          "periodId": resultEvent.lastInsertID,
+          "placeId": resultPlace.lastInsertID,
         },
       );
 
-      //confirm PeriodPlace ID
-      var lastInsertedPeriodPlaceID = resultPeriodPlace.lastInsertID;
+      //confirm PlacePeriod ID
+      var lastInsertedPlacePeriodID = resultPlacePeriod.lastInsertID;
       if (kDebugMode) {
-        print(lastInsertedPeriodPlaceID);
+        print(lastInsertedPlacePeriodID);
       }
     }
 
@@ -105,21 +105,27 @@ class ConfirmModel extends ChangeNotifier {
         print(lastInsertedDateID);
       }
 
-      // Insert $period_id and date_id into period-date table
-      var resultPeriodDate = await conn.execute(
-          "INSERT INTO date$period (id, period_id, date.id) VALUES (:id, period_id ,date.id)",
+      // Insert $period_id and date_id into date$period table
+      var resultDatePeriod = await conn.execute(
+          "INSERT INTO date$period (id, periodIid, dateId) VALUES (:id, periodId ,dateId)",
           <String, dynamic>{
             "id": null,
-            "period_id": resultEvent.lastInsertID,
-            "date_id": resultDate.lastInsertID,
+            "periodId": resultEvent.lastInsertID,
+            "dateId": resultDate.lastInsertID,
           }
       );
-      //confirm PeriodDate ID
-      var lastInsertedPeriodDateID = resultPeriodDate;
+      //confirm DatePeriod ID
+      var lastInsertedDatePeriodID = resultDatePeriod;
       if (kDebugMode) {
-        print(lastInsertedPeriodDateID);
+        print(lastInsertedDatePeriodID);
       }
     }
+
+    //country involved
+
+    //person or organization involved
+
+
     
     // close all connections
     await conn.close();

@@ -25,8 +25,8 @@ class _WhenPageState extends State<WhenPage> {
   List<String> periods = <String>[
     'BillionYears',
     'MillionYears',
-    'ThousandYears'
-    'YearsByDating Methods',
+    'ThousandYears',
+    'YearsByDatingMethods',
     'HistoricalYears',
   ];
 
@@ -65,7 +65,7 @@ class _WhenPageState extends State<WhenPage> {
                             child: DropdownButton<String>(
                               value: isSelectedCalendar,
                               alignment: Alignment.center,
-                              dropdownColor: const Color(0x99e6e6fa),
+                              dropdownColor: const Color(0xCCe6e6fa),
                               borderRadius: BorderRadius.circular(15.0),
 
                               onChanged: (String? value) {

@@ -31,7 +31,7 @@ class _TermsPageState extends State<TermsPage> {
     await conn.connect();
 
     // make query
-    var result = await conn.execute("SELECT * FROM term");
+    var result = await conn.execute("SELECT * FROM Terms");
 
     // make list with query result
     List<Map<String, String>> list = [];
@@ -67,7 +67,7 @@ class _TermsPageState extends State<TermsPage> {
 
     // insert some rows
     var resultTerm = await conn.execute(
-      "INSERT INTO term (id, term) VALUES (:id, :term)",
+      "INSERT INTO Terms (id, term) VALUES (:id, :term)",
       <String, dynamic>{
         "id": null, //if you set it auto increment
         "term": newTerm,
@@ -202,7 +202,7 @@ class _TermsPageState extends State<TermsPage> {
               });
 
           confirm.selectedTerm = _filtersT;
-          confirm.selectedIdT = _filtersT;
+          confirm.selectedTermId = _filtersT;
           print("$_filtersT");
         },
         label: const Text('Temporarily Save'),

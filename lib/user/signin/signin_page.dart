@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/mundi_theme.dart';
+import '../../index_page.dart';
 import 'signin_model.dart';
 
 
@@ -80,12 +81,20 @@ class SigninPage extends StatelessWidget {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                               ),
-                              onPressed: () async {
+                              onPressed: () {
+                                Navigator.push<String>(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const IndexPage(),
+                                  ),
+                                );
+
+                                /*
                                 model.startLoading();
 
                                 // 追加の処理
                                 try {
-                                  await model.signin();
+                                  model.signin();
                                   Navigator.of(context).pop();
                                 } catch (e) {
                                   final snackBar = SnackBar(
@@ -97,6 +106,8 @@ class SigninPage extends StatelessWidget {
                                 } finally {
                                   model.endLoading();
                                 }
+
+                                 */
                               },
                               child: const Text('login'),
                             ),

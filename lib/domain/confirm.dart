@@ -3,7 +3,7 @@ class Confirm{
 
   //when
 
-  String? isSelectedCalendar = "BeforeSolarSystem";
+  String? isSelectedCalendar = "HistoricalYears";
   int year = 0;
   int? date = 0;
   String? dateLocal = "";
@@ -22,13 +22,17 @@ class Confirm{
   double? y = 0.0;
   double? z = 0.0;
 
+  //pay involved
+  List<String> selectedPays = [];
+  List<String> selectedPaysId = [];
+
   //who
   List<String> selectedWho = [];
-  List<String> selectedIdP = [];
+  List<String> selectedWhoId = [];
 
   //terms
   List<String> selectedTerm = [];
-  List<String> selectedIdT = [];
+  List<String> selectedTermId = [];
 
   final int confirmId = 0;
 

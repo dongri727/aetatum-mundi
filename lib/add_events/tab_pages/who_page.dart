@@ -15,10 +15,16 @@ class WhoPage extends StatefulWidget {
 
 class _WhoPageState extends State<WhoPage> {
 
-  List<Map<String, String>> displayList = [];
-  final List<String> _filtersP = <String>[];
+  List<Map<String, String>> displayListPays = [];
+  final List<String> _filtersPays = <String>[];
 
-  Future<void> _participants() async {
+  List<Map<String, String>> displayListOrg = [];
+  final List<String> _filtersOrg = <String>[];
+
+  List<Map<String, String>> displayListWho = [];
+  final List<String> _filtersWho = <String>[];
+
+  Future<void> _paysInvolved() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
       host: "127.0.0.1",
@@ -30,27 +36,27 @@ class _WhoPageState extends State<WhoPage> {
 
     await conn.connect();
 
-    // make query
-    var result = await conn.execute("SELECT * FROM Participants");
+    // select countries involved
+    var result = await conn.execute("SELECT id,pays FROM Pays");
 
     // make list with query result
-    List<Map<String, String>> list = [];
+    List<Map<String, String>> paysList = [];
     for (final row in result.rows) {
       final data = {
         'selectedId': row.colAt(0)!,
-        'selectedWho': row.colAt(1)!,
+        'selectedPays': row.colAt(1)!,
       };
-      list.add(data);
+      paysList.add(data);
     }
 
     setState(() {
-      displayList = list;
+      displayListPays = paysList;
     });
 
     // close all connections
     await conn.close();
   }
-
+/*
   var newWho = '';
 
   Future<void> _insert() async {
@@ -69,7 +75,7 @@ class _WhoPageState extends State<WhoPage> {
     var res = await conn.execute(
       "INSERT INTO Participants (id, participant) VALUES (:id, :participant)",
       <String, dynamic>{
-        "id": null, //if you set it auto increment
+        "id": null,
         "participant": newWho,
       },
     );
@@ -77,6 +83,8 @@ class _WhoPageState extends State<WhoPage> {
     // close all connections
     await conn.close();
   }
+
+ */
 
   @override
   Widget build(BuildContext context) {
@@ -96,20 +104,96 @@ class _WhoPageState extends State<WhoPage> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Column(
-                      children: [],
-                    ),
-
-                  ),
-                  Expanded(
-                      flex: 1,
+                    child: SingleChildScrollView(
                       child: Column(
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: OutlinedButton(
-                              onPressed: _participants,
+                              onPressed: _paysInvolved,
+                              child: const Text('Show Pays Involved'),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Wrap(
+                              spacing: 5.0,
+                              children: displayListPays.map<Widget>((data) {
+                                return FilterChip(
+                                  label: Text(data['selectedPays'] ?? ""),
+                                  //selected: _filtersP.contains(data['selectedId']! + data['selectedWho']!),
+                                  selected: _filtersPays.contains(data['selectedPays']!),
+                                  onSelected: (bool value) {
+                                    setState(() {
+                                      if (value) {
+                                        if (!_filtersPays.contains(data['selectedPays']!)) {
+                                          _filtersPays.add(data['selectedPay']!);
+                                        }
+                                      } else {
+                                        _filtersPays.removeWhere((String who) {
+                                          return who == data[data['selectedPays']]!;
+                                        });
+                                      }
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          Text(
+                            'Selected: ${_filtersPays.join(', ')}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.yellow,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          /*
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: OutlinedButton(
+                              onPressed: _payInvolved,
                               child: const Text('Show Participants'),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Wrap(
+                              spacing: 5.0,
+                              children: displayListPay.map<Widget>((data) {
+                                return FilterChip(
+                                  label: Text(data['selectedWho'] ?? ""),
+                                  //selected: _filtersP.contains(data['selectedId']! + data['selectedWho']!),
+                                  selected: _filtersPay.contains(data['selectedWho']!),
+                                  onSelected: (bool value) {
+                                    setState(() {
+                                      if (value) {
+                                        if (!_filtersPay.contains(data['selectedWho']!)) {
+                                          _filtersPay.add(data['selectedWho']!);
+                                        }
+                                      } else {
+                                        _filtersPay.removeWhere((String who) {
+                                          return who == data[data['selectedWho']]!;
+                                        });
+                                      }
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          Text(
+                            'Selected: ${_filtersPay.join(', ')}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.yellow,
                             ),
                           ),
                           const SizedBox(height: 5.0),
@@ -117,19 +201,19 @@ class _WhoPageState extends State<WhoPage> {
                             padding: const EdgeInsets.all(8.0),
                             child: Wrap(
                               spacing: 5.0,
-                              children: displayList.map<Widget>((data) {
+                              children: displayListPay.map<Widget>((data) {
                                 return FilterChip(
                                   label: Text(data['selectedWho'] ?? ""),
                                   //selected: _filtersP.contains(data['selectedId']! + data['selectedWho']!),
-                                  selected: _filtersP.contains(data['selectedWho']!),
+                                  selected: _filtersPay.contains(data['selectedWho']!),
                                   onSelected: (bool value) {
                                     setState(() {
                                       if (value) {
-                                        if (!_filtersP.contains(data['selectedWho']!)) {
-                                          _filtersP.add(data['selectedWho']!);
+                                        if (!_filtersPay.contains(data['selectedWho']!)) {
+                                          _filtersPay.add(data['selectedWho']!);
                                         }
                                       } else {
-                                        _filtersP.removeWhere((String who) {
+                                        _filtersPay.removeWhere((String who) {
                                           return who == data[data['selectedWho']]!;
                                         });
                                       }
@@ -141,12 +225,15 @@ class _WhoPageState extends State<WhoPage> {
                           ),
                           const SizedBox(height: 10.0),
                           Text(
-                            'Selected: ${_filtersP.join(', ')}',
+                            'Selected: ${_filtersPay.join(', ')}',
                             style: const TextStyle(
                               fontSize: 20,
                               color: Colors.yellow,
                             ),
+
                           ),
+
+                           */
                         ],
                       )
                   ),
@@ -154,7 +241,7 @@ class _WhoPageState extends State<WhoPage> {
                       flex: 1,
                       child: Column(
                         children: [
-
+/*
                           Padding(
                             padding: const EdgeInsets.all(30.0),
                             child: TffFormat(
@@ -173,10 +260,13 @@ class _WhoPageState extends State<WhoPage> {
                         ],
                       )
                   ),
+
+ */
                 ],
               ),
             ),
-          )),
+            ]))
+      )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           showDialog<void>(
@@ -196,9 +286,9 @@ class _WhoPageState extends State<WhoPage> {
                 );
               });
 
-          confirm.selectedWho = _filtersP;
-          confirm.selectedIdP = _filtersP;
-          print ("$_filtersP");
+          confirm.selectedWho = _filtersPays;
+          confirm.selectedWhoId = _filtersPays;
+          print ("$_filtersPays");
         },
         label: const Text('Temporarily Save'),
       ),
