@@ -41,7 +41,7 @@ class _WhatPageState extends State<WhatPage> {
                             newName = text;
                           },
                             tffColor1: const Color(0xFF2f4f4f),
-                            tffColor2: const Color(0xFF6b8e23),
+                            tffColor2: const Color(0x99e6e6fa),
                         )
                     ),
                   ),

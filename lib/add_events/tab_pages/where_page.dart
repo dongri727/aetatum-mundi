@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:mysql_client/mysql_client.dart';
 
+import '../../domain/.words.dart';
 import '../../domain/formats.dart';
 import '../../domain/confirm.dart';
 import '../../domain/country.dart';
@@ -19,20 +21,17 @@ class WherePage extends StatefulWidget {
 
 class _WherePageState extends State<WherePage> {
 
-  //var newCountry = '';
   var newPlace = '';
   var newLatitude = 0.0;
   var newLongitude = 0.0;
-  var newCountryAtThatTime = '';
-  var newPlaceAtThatTime = '';
+  var newATT = '';
   double x = 0.0;
   double y = 0.0;
   double z = 0.0;
 
-  String isSelectedPay = 'Where did it happened ?';
+  String isSelectedPay = 'Universe';
 
   List<String> countries = <String>[
-    'Where did it happened ?',
     'Universe',
     'MilkyWay',
     'SolarSystem',
@@ -237,6 +236,166 @@ class _WherePageState extends State<WherePage> {
     'Zimbabwe',
   ];
 
+  List<Map<String, String>> displayListPlace = [];
+  final List<String> _filtersPlace = <String>[];
+
+  List<Map<String, String>> displayListATT = [];
+  final List<String> _filtersATT = <String>[];
+
+  Future<void> _place() async {
+    // create connection
+    final conn = await MySQLConnection.createConnection(
+      host: "127.0.0.1",
+      port: 3306,
+      userName: NAME,
+      password: PASSWORD,
+      databaseName: "aetatum",
+    );
+
+    await conn.connect();
+
+    // select countries at that time involved
+    var result = await conn.execute("SELECT id,place FROM Places ORDER BY place");
+
+    // make list with query result
+    List<Map<String, String>> placeList = [];
+    for (final row in result.rows) {
+      final data = {
+        'selectedPlaced': row.colAt(0)!,
+        'selectedPlace': row.colAt(1)!,
+      };
+      placeList.add(data);
+    }
+
+    setState(() {
+      displayListPlace = placeList;
+    });
+
+    // close all connections
+    await conn.close();
+  }
+
+  Future<void> _insertPlace() async {
+    // create connection
+    final conn = await MySQLConnection.createConnection(
+      host: "127.0.0.1",
+      port: 3306,
+      userName: NAME,
+      password: PASSWORD,
+      databaseName: "aetatum",
+    );
+
+    await conn.connect();
+
+    // insert some rows to ATT
+    var res = await conn.execute(
+      "INSERT INTO Places (id, place) VALUES (:id, :place)",
+      <String, dynamic>{
+        "id": null,
+        "pays": newPlace,
+      },
+    );
+
+    print('ATT inserted');
+
+    // select countries involved
+    var result = await conn.execute("SELECT id, att FROM AtThatTime ORDER BY att");
+
+    // make list with query result
+    List<Map<String, String>> placeList = [];
+    for (final row in result.rows) {
+      final data = {
+        'selectedPlaceId': row.colAt(0)!,
+        'selectedPlace': row.colAt(1)!,
+      };
+      placeList.add(data);
+    }
+
+    setState(() {
+      displayListPlace = placeList;
+    });
+
+    // close all connections
+    await conn.close();
+  }
+
+  Future<void> _att() async {
+    // create connection
+    final conn = await MySQLConnection.createConnection(
+      host: "127.0.0.1",
+      port: 3306,
+      userName: NAME,
+      password: PASSWORD,
+      databaseName: "aetatum",
+    );
+
+    await conn.connect();
+
+    // select countries at that time involved
+    var result = await conn.execute("SELECT id,att FROM AtThatTime ORDER BY att");
+
+    // make list with query result
+    List<Map<String, String>> attList = [];
+    for (final row in result.rows) {
+      final data = {
+        'selectedATTId': row.colAt(0)!,
+        'selectedATT': row.colAt(1)!,
+      };
+      attList.add(data);
+    }
+
+    setState(() {
+      displayListATT = attList;
+    });
+
+    // close all connections
+    await conn.close();
+  }
+
+  Future<void> _insertATT() async {
+    // create connection
+    final conn = await MySQLConnection.createConnection(
+      host: "127.0.0.1",
+      port: 3306,
+      userName: NAME,
+      password: PASSWORD,
+      databaseName: "aetatum",
+    );
+
+    await conn.connect();
+
+    // insert some rows to ATT
+    var res = await conn.execute(
+      "INSERT INTO AtThatTime (id, att) VALUES (:id, :att)",
+      <String, dynamic>{
+        "id": null,
+        "pays": newATT,
+      },
+    );
+
+    print('ATT inserted');
+
+    // select countries involved
+    var result = await conn.execute("SELECT id, att FROM AtThatTime ORDER BY att");
+
+    // make list with query result
+    List<Map<String, String>> attList = [];
+    for (final row in result.rows) {
+      final data = {
+        'selectedATTId': row.colAt(0)!,
+        'selectedATT': row.colAt(1)!,
+      };
+      attList.add(data);
+    }
+
+    setState(() {
+      displayListATT = attList;
+    });
+
+    // close all connections
+    await conn.close();
+  }
+
   @override
   Widget build(BuildContext context) {
     final confirm = Provider.of<Confirm>(context);
@@ -257,6 +416,12 @@ class _WherePageState extends State<WherePage> {
                     flex: 1,
                     child: Column(
                       children: [
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                          child: HintText(hintText:
+                          'Select Where it happened from the following'
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Container(
@@ -279,67 +444,98 @@ class _WherePageState extends State<WherePage> {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(
-                                      style: MundiTheme.textTheme.bodyMedium,
+                                      style: MundiTheme.textTheme.headlineMedium,
                                       value),
                                 );
                               }).toList(),
                             ),
                           ),
                         ),
+                        Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: TffFormat(
+                              hintText: "Latitude",
+                              onChanged: (value) {
+                                newLatitude = double.tryParse(value)!;
+                              },
+                              tffColor1: Colors.black54,
+                              tffColor2: const Color(0x99e6e6fa),
+                            )
+                        ),
+
+
+                        Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: TffFormat(
+                              hintText: "Longitude",
+                              onChanged: (value) {
+                                newLongitude = double.tryParse(value)!;
+                              },
+                              tffColor1: Colors.black54,
+                              tffColor2: const Color(0x99e6e6fa),
+                            )
+                        ),
                       ],
                     ),
-
                   ),
                   Expanded(
                       flex: 1,
                       child: Column(
                         children: [
-                          /*
                           Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TffFormat(
-                                hintText: "Current Country Name",
-                                onChanged: (text) {
-                                  newCountry = text;
-                                },
-                                tffColor1: const Color(0xFF2f4f4f),
-                                tffColor2: const Color(0xFF6b8e23),
-                              )
+                            padding: const EdgeInsets.all(20.0),
+                            child: OutlinedButton(
+                              onPressed: _place,
+                              child: const Text('Show and Select Current Place'),
+                            ),
                           ),
-                           */
-                          Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TffFormat(
-                                hintText: "Current Place Name",
-                                onChanged: (text) {
-                                  newPlace = text;
-                                },
-                                tffColor1: Colors.black54,
-                                tffColor2: Colors.grey,
-                              )
+                          Text(
+                            'Selected: ${_filtersPlace.join(', ')}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.yellow,
+                            ),
                           ),
                           Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TffFormat(
-                                hintText: "Country Name at That Time",
-                                onChanged: (text) {
-                                  newCountryAtThatTime = text;
-                                },
-                                tffColor1: Colors.black54,
-                                tffColor2: Colors.grey,
-                              )
+                            padding: const EdgeInsets.all(8.0),
+                            child: Wrap(
+                              spacing: 5.0,
+                              children: displayListPlace.map<Widget>((data) {
+                                return FilterChip(
+                                  label: Text(data['selectedPlace'] ?? ""),
+                                  selected: _filtersPlace.contains(data['selectedPlace']!),
+                                  onSelected: (bool value) {
+                                    setState(() {
+                                      if (value) {
+                                        if (!_filtersPlace.contains(data['selectedPlace']!)) {
+                                          _filtersPlace.add(data['selectedPlace']!);
+                                        }
+                                      } else {
+                                        _filtersPlace.removeWhere((String who) {
+                                          return who == data[data['selectedPlace']]!;
+                                        });
+                                      }
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                            ),
                           ),
                           Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TffFormat(
-                                hintText: "Place Name at That Time",
-                                onChanged: (text) {
-                                  newPlaceAtThatTime = text;
-                                },
-                                tffColor1: Colors.black54,
-                                tffColor2: Colors.grey,
-                              )
+                            padding: const EdgeInsets.all(30.0),
+                            child: TffFormat(
+                              hintText: 'a New Place You Want',
+                              onChanged: (text) {
+                                newPlace = text;
+                              },
+                              tffColor1: Colors.black54,
+                              tffColor2: const Color(0x99e6e6fa),
+                            ),
                           ),
+                          OutlinedButton (
+                            onPressed: _insertPlace,
+                            child: const Text('Add a New Place'),
+                          )
                         ],
                       )
                   ),
@@ -347,31 +543,60 @@ class _WherePageState extends State<WherePage> {
                       flex: 1,
                       child: Column(
                         children: [
-
                           Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TffFormat(
-                                hintText: "Latitude",
-                                onChanged: (value) {
-                                  newLatitude = double.tryParse(value)!;
-                                },
-                                tffColor1: Colors.black54,
-                                tffColor2: Colors.grey,
-                              )
+                            padding: const EdgeInsets.all(20.0),
+                            child: OutlinedButton(
+                              onPressed: _place,
+                              child: const Text('Show and Select Country, Place at that time'),
+                            ),
                           ),
-
-
+                          Text(
+                            'Selected: ${_filtersATT.join(', ')}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.yellow,
+                            ),
+                          ),
                           Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TffFormat(
-                                hintText: "Longitude",
-                                onChanged: (value) {
-                                  newLongitude = double.tryParse(value)!;
-                                },
-                                tffColor1: Colors.black54,
-                                tffColor2: Colors.grey,
-                              )
+                            padding: const EdgeInsets.all(8.0),
+                            child: Wrap(
+                              spacing: 5.0,
+                              children: displayListATT.map<Widget>((data) {
+                                return FilterChip(
+                                  label: Text(data['selectedATT'] ?? ""),
+                                  selected: _filtersATT.contains(data['selectedATT']!),
+                                  onSelected: (bool value) {
+                                    setState(() {
+                                      if (value) {
+                                        if (!_filtersATT.contains(data['selectedATT']!)) {
+                                          _filtersATT.add(data['selectedATT']!);
+                                        }
+                                      } else {
+                                        _filtersATT.removeWhere((String who) {
+                                          return who == data[data['selectedATT']]!;
+                                        });
+                                      }
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                            ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(30.0),
+                            child: TffFormat(
+                              hintText: 'a New Country,Place at that time You Want',
+                              onChanged: (text) {
+                                newATT = text;
+                              },
+                              tffColor1: Colors.black54,
+                              tffColor2: const Color(0x99e6e6fa),
+                            ),
+                          ),
+                          OutlinedButton (
+                            onPressed: _insertATT,
+                            child: const Text('Add a New Country, Place at that time'),
+                          )
                         ],
                       )
                   ),
@@ -408,8 +633,7 @@ class _WherePageState extends State<WherePage> {
 
           confirm.country = isSelectedPay;
           confirm.place = newPlace;
-          confirm.countryAtThatTime = newCountryAtThatTime;
-          confirm.placeAtThatTime = newPlaceAtThatTime;
+          confirm.att = newATT;
           confirm.latitude = newLatitude;
           confirm.longitude = newLongitude;
           confirm.x = x;

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:mysql_client/mysql_client.dart';
 
@@ -34,13 +36,13 @@ class ConfirmModel extends ChangeNotifier {
     // Insert main data into applicable period
     var resultEvent = await conn.execute(
       "INSERT INTO $period "
-          "(id, annee, affair, country)"
-          "VALUES (:id, :annee, :affair, :country)",
+          "(id, annee, affair, pays)"
+          "VALUES (:id, :annee, :affair, :pays)",
       <String, dynamic>{
         "id": null,
         "annee": confirm.year,
         "affair": confirm.name,
-        "country": confirm.country,
+        "pays": confirm.country,
         //"created-by": confirm.userID,
       },
     );
@@ -122,8 +124,81 @@ class ConfirmModel extends ChangeNotifier {
     }
 
     //country involved
+    //todo Listを入力するのはこれでいいのか？
+    if (confirm.selectedPays.isNotEmpty) {
+      var resultPaysPeriod = await conn.execute(
+          "INSERT INTO pay$period (id, periodId, paysId) VALUES (:id, :periodId, :paysId)",
+        <String, dynamic>{
+            "id": null,
+          "periodId": resultEvent.lastInsertID,
+          "paysId": confirm.selectedPaysId,
+        }
+      );
+      //confirm PayPeriod ID
+      var lastInsertedPayPeriodID = resultPaysPeriod;
+      if (kDebugMode) {
+        print(lastInsertedPayPeriodID);
+      }
+    }
 
-    //person or organization involved
+    //ATT involved
+    //todo Listを入力するのはこれでいいのか？
+    if (confirm.selectedATT.isNotEmpty) {
+      var resultPaysPeriod = await conn.execute(
+          "INSERT INTO pay$period (id, periodId, paysId) VALUES (:id, :periodId, :paysId)",
+          <String, dynamic>{
+            "id": null,
+            "periodId": resultEvent.lastInsertID,
+            "paysId": confirm.selectedPaysId,
+          }
+      );
+      //confirm PayPeriod ID
+      var lastInsertedPayPeriodID = resultPaysPeriod;
+      if (kDebugMode) {
+        print(lastInsertedPayPeriodID);
+      }
+    }
+
+    //organizations involved
+    //todo Listを入力するのはこれでいいのか？
+    if (confirm.selectedOrg.isNotEmpty) {
+      var resultOrgPeriod = await conn.execute(
+          "INSERT INTO pay$period (id, periodId, orgId) VALUES (:id, :periodId, :orgId)",
+          <String, dynamic>{
+            "id": null,
+            "periodId": resultEvent.lastInsertID,
+            "paysId": confirm.selectedOrgId,
+          }
+      );
+      //confirm OrgPeriod ID
+      var lastInsertedOrgPeriodID = resultOrgPeriod;
+      if (kDebugMode) {
+        print(lastInsertedOrgPeriodID);
+      }
+    }
+
+    //people involved
+    //todo Listを入力するのはこれでいいのか？
+    if (confirm.selectedWho.isNotEmpty) {
+      var resultWhoPeriod = await conn.execute(
+          "INSERT INTO pay$period (id, periodId, personId) VALUES (:id, :periodId, :personId)",
+          <String, dynamic>{
+            "id": null,
+            "periodId": resultEvent.lastInsertID,
+            "personId": confirm.selectedWhoId,
+          }
+      );
+      //confirm OrgPeriod ID
+      var lastInsertedWhoPeriodID = resultWhoPeriod;
+      if (kDebugMode) {
+        print(lastInsertedWhoPeriodID);
+      }
+    }
+
+
+
+
+
 
 
     

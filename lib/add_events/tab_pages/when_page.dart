@@ -95,7 +95,7 @@ class _WhenPageState extends State<WhenPage> {
                                 newYear = int.parse(value);
                               },
                               tffColor1: Colors.black54,
-                              tffColor2: const Color(0x996b8e23),
+                              tffColor2: const Color(0x99e6e6fa),
                             )
                         ),
                         Padding(
@@ -106,7 +106,7 @@ class _WhenPageState extends State<WhenPage> {
                                 newDate = int.parse(value);
                               },
                               tffColor1: Colors.black54,
-                              tffColor2: const Color(0x66808080),
+                              tffColor2: const Color(0x99e6e6fa),
                             ),
                         ),
 
@@ -121,7 +121,7 @@ class _WhenPageState extends State<WhenPage> {
                               newDateLocal = text;
                             },
                             tffColor1: Colors.black54,
-                            tffColor2: const Color(0x66808080),
+                            tffColor2: const Color(0x99e6e6fa),
                           ),
                         ),
                       ],

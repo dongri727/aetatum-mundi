@@ -126,7 +126,7 @@ class _ReadAllPageState extends State<ReadAllPage> {
                   Column(children: displayList.map<Widget>((data) {
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(150, 0, 150, 0),
-                      child: Card(color: const Color(0x66006400),
+                      child: Card(color: Colors.indigo,
                           elevation: 10,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

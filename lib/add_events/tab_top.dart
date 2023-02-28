@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../domain/confirm.dart';
+import 'tab_pages/pays_page.dart';
 import 'tab_pages/preview_page.dart';
 import 'tab_pages/terms_page.dart';
 import 'tab_pages/what_page.dart';
@@ -36,7 +37,7 @@ class TabPage extends StatelessWidget {
             ),
             child: SafeArea(
               child: DefaultTabController(
-                length: 6,
+                length: 7,
                 child: Column(
                   children: const [
                     TabBar(
@@ -46,7 +47,8 @@ class TabPage extends StatelessWidget {
                         Tab(text: 'WHEN'),
                         Tab(text: 'WHAT'),
                         Tab(text: 'WHERE'),
-                        Tab(text: 'PARTICIPANTS'),
+                        Tab(text: 'PARTICIPANTS A'),
+                        Tab(text: 'PARTICIPANTS B'),
                         Tab(text: 'SEARCH TERMS'),
                         Tab(text: 'CONFIRM',)
 
@@ -59,6 +61,7 @@ class TabPage extends StatelessWidget {
                           WhenPage(), // いつ？
                           WhatPage(), // なにが？
                           WherePage(), // どこで？
+                          PaysPage(),
                           WhoPage(), // だれ？
                           TermsPage(), // 検索語
                           PreviewPage(), // プレビュー

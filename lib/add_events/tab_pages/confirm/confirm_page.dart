@@ -59,8 +59,14 @@ class ConfirmPage extends StatelessWidget {
                         flex: 1,
                         child: Column(
                           children: [
+                            const Padding(
+                              padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                              child: HintText(hintText:
+                              '4 items required'
+                              ),
+                            ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 50, 8, 8),
+                              padding: const EdgeInsets.all(8.0),
                               child: ConfirmText(
                                   confirmText: '${_confirm.isSelectedCalendar}',
                                   confirmColor: const Color(0xFFF0E68C)),
@@ -70,6 +76,24 @@ class ConfirmPage extends StatelessWidget {
                               child: ConfirmText(
                                   confirmText: '${_confirm.year}',
                                   confirmColor: const Color(0xFFF0E68C)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ConfirmText(
+                                  confirmText: _confirm.name,
+                                  confirmColor: const Color(0xFFF0E68C)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ConfirmText(
+                                  confirmText: _confirm.country,
+                                  confirmColor: const Color(0xFFF0E68C)),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                              child: HintText(hintText:
+                              'others option'
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -86,26 +110,13 @@ class ConfirmPage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ConfirmText(
-                                  confirmText: _confirm.name,
-                                  confirmColor: const Color(0xFFF0E68C)),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 50, 8, 8),
-                              child: ConfirmText(
-                                  confirmText: _confirm.country,
-                                  confirmColor: const Color(0xFFF0E68C)),
+                                  confirmText: _confirm.place,
+                                  confirmColor: const Color(0xFF8fbc8f)),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ConfirmText(
-                                  confirmText: _confirm.place,
+                                  confirmText: _confirm.att,
                                   confirmColor: const Color(0xFF8fbc8f)),
                             ),
                             Padding(
@@ -120,44 +131,89 @@ class ConfirmPage extends StatelessWidget {
                                   confirmText: '${_confirm.longitude}',
                                   confirmColor: const Color(0xFF8fbc8f)),
                             ),
+
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: [
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ConfirmText(
-                                  confirmText: _confirm.countryAtThatTime,
-                                  confirmColor: const Color(0xFF8fbc8f)),
+                              padding: const EdgeInsets.fromLTRB(30, 50, 30, 8),
+                              child: Text('Countries Involved',
+                                  style: MundiTheme.textTheme.headlineSmall),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ConfirmText(
-                                  confirmText: _confirm.placeAtThatTime,
-                                  confirmColor: const Color(0xFF8fbc8f)),
+                                padding: const EdgeInsets.fromLTRB(
+                                    30, 8, 30, 8),
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: _confirm.selectedPays.length,
+                                    itemBuilder: (context, index) {
+                                      return TermCard(
+                                        _confirm.selectedPays[index],
+                                      );
+                                    }
+                                )
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(30, 50, 30, 8),
+                              child: Text('Countries Involved at that time',
+                                  style: MundiTheme.textTheme.headlineSmall),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    30, 8, 30, 8),
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: _confirm.selectedATT.length,
+                                    itemBuilder: (context, index) {
+                                      return TermCard(
+                                        _confirm.selectedATT[index],
+                                      );
+                                    }
+                                )
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(30, 50, 30, 8),
+                              child: Text('Organizations Involved',
+                                  style: MundiTheme.textTheme.headlineSmall),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    30, 8, 30, 8),
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: _confirm.selectedOrg.length,
+                                    itemBuilder: (context, index) {
+                                      return TermCard(
+                                        _confirm.selectedOrg[index],
+                                      );
+                                    }
+                                )
                             ),
                           ],
                         ),
                       ),
-
-                      //TODO 各リストの内容を表示する
                       Expanded(
                         flex: 1,
                         child: Column(children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(30, 50, 30, 8),
-                            child: Text('Participants',
+                            child: Text('People Involved',
                             style: MundiTheme.textTheme.headlineSmall),
                           ),
                           Padding(
                               padding: const EdgeInsets.fromLTRB(
                                   30, 8, 30, 8),
-                              child: GridView.builder(
+                              child: ListView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount: _confirm.selectedWho.length,
-                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    childAspectRatio: (MediaQuery.of(context)
-                                        .size
-                                        .height/300)
-                                  ),
                                   itemBuilder: (context, index) {
                                     return TermCard(
                                         _confirm.selectedWho[index],
@@ -166,7 +222,7 @@ class ConfirmPage extends StatelessWidget {
                               )
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(30, 30, 30, 8),
+                            padding: const EdgeInsets.fromLTRB(30, 50, 30, 8),
                             child: Text('Category',
                                 style: MundiTheme.textTheme.headlineSmall),
                           ),
@@ -176,12 +232,31 @@ class ConfirmPage extends StatelessWidget {
                               child: ListView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: _confirm.selectedTerm.length,
+                                  itemCount: _confirm.selectedCategory.length,
                                   //gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                   //  crossAxisCount: 2),
                                   itemBuilder: (context, index) {
                                     return TermCard(
-                                        _confirm.selectedTerm[index]
+                                        _confirm.selectedCategory[index]
+                                    );
+                                  }
+                              )
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(30, 50, 30, 8),
+                            child: Text('Search Terms',
+                                style: MundiTheme.textTheme.headlineSmall),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  30, 8, 30, 8),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: _confirm.selectedTerm.length,
+                                  itemBuilder: (context, index) {
+                                    return TermCard(
+                                      _confirm.selectedTerm[index],
                                     );
                                   }
                               )

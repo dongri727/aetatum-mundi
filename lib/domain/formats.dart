@@ -23,7 +23,7 @@ class TffFormat extends StatelessWidget {
         contentPadding: const EdgeInsets.all(5.0),
         hintText: hintText,
         hintStyle: TextStyle(
-            fontSize: 20,
+            fontSize: 16,
             color: tffColor1),
         fillColor: tffColor2,
         filled: true,

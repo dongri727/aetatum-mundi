@@ -15,16 +15,13 @@ class WhoPage extends StatefulWidget {
 
 class _WhoPageState extends State<WhoPage> {
 
-  List<Map<String, String>> displayListPays = [];
-  final List<String> _filtersPays = <String>[];
-
   List<Map<String, String>> displayListOrg = [];
   final List<String> _filtersOrg = <String>[];
 
   List<Map<String, String>> displayListWho = [];
   final List<String> _filtersWho = <String>[];
 
-  Future<void> _paysInvolved() async {
+  Future<void> _orgInvolved() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
       host: "127.0.0.1",
@@ -37,29 +34,29 @@ class _WhoPageState extends State<WhoPage> {
     await conn.connect();
 
     // select countries involved
-    var result = await conn.execute("SELECT id,pays FROM Pays");
+    var result = await conn.execute("SELECT id, organization FROM Organizations ORDER BY organization");
 
     // make list with query result
-    List<Map<String, String>> paysList = [];
+    List<Map<String, String>> orgList = [];
     for (final row in result.rows) {
       final data = {
-        'selectedId': row.colAt(0)!,
-        'selectedPays': row.colAt(1)!,
+        'selectedOrgId': row.colAt(0)!,
+        'selectedOrg': row.colAt(1)!,
       };
-      paysList.add(data);
+      orgList.add(data);
     }
 
     setState(() {
-      displayListPays = paysList;
+      displayListOrg = orgList;
     });
 
     // close all connections
     await conn.close();
   }
-/*
-  var newWho = '';
 
-  Future<void> _insert() async {
+  var newOrg = '';
+
+  Future<void> _insertOrg() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
       host: "127.0.0.1",
@@ -71,20 +68,117 @@ class _WhoPageState extends State<WhoPage> {
 
     await conn.connect();
 
-    // insert some rows
+    // insert some rows to Organization
     var res = await conn.execute(
-      "INSERT INTO Participants (id, participant) VALUES (:id, :participant)",
+      "INSERT INTO Organizations (id, organization) VALUES (:id, :organization)",
       <String, dynamic>{
         "id": null,
-        "participant": newWho,
+        "organization": newOrg,
       },
     );
+
+    print('organization inserted');
+
+    // select countries involved
+    var result = await conn.execute("SELECT id, organization FROM Organizations ORDER BY organization");
+
+    // make list with query result
+    List<Map<String, String>> orgList = [];
+    for (final row in result.rows) {
+      final data = {
+        'selectedOrgId': row.colAt(0)!,
+        'selectedOrg': row.colAt(1)!,
+      };
+      orgList.add(data);
+    }
+
+    setState(() {
+      displayListOrg = orgList;
+    });
 
     // close all connections
     await conn.close();
   }
 
- */
+
+  Future<void> _whoInvolved() async {
+    // create connection
+    final conn = await MySQLConnection.createConnection(
+      host: "127.0.0.1",
+      port: 3306,
+      userName: NAME,
+      password: PASSWORD,
+      databaseName: "aetatum",
+    );
+
+    await conn.connect();
+
+    // select person involved
+    var result = await conn.execute("SELECT id, person FROM People ORDER BY person");
+
+    // make list with query result
+    List<Map<String, String>> whoList = [];
+    for (final row in result.rows) {
+      final data = {
+        'selectedWhoId': row.colAt(0)!,
+        'selectedWho': row.colAt(1)!,
+      };
+      whoList.add(data);
+    }
+
+    setState(() {
+      displayListWho = whoList;
+    });
+
+    // close all connections
+    await conn.close();
+  }
+
+  var newWho = '';
+
+  Future<void> _insertWho() async {
+    // create connection
+    final conn = await MySQLConnection.createConnection(
+      host: "127.0.0.1",
+      port: 3306,
+      userName: NAME,
+      password: PASSWORD,
+      databaseName: "aetatum",
+    );
+
+    await conn.connect();
+
+    // insert some rows to People
+    var res = await conn.execute(
+      "INSERT INTO People (id, person) VALUES (:id, :person)",
+      <String, dynamic>{
+        "id": null,
+        "person": newWho,
+      },
+    );
+
+    print('person inserted');
+
+    // select person involved
+    var result = await conn.execute("SELECT id, person FROM People ORDER BY person");
+
+    // make list with query result
+    List<Map<String, String>> whoList = [];
+    for (final row in result.rows) {
+      final data = {
+        'selectedWhoId': row.colAt(0)!,
+        'selectedWho': row.colAt(1)!,
+      };
+      whoList.add(data);
+    }
+
+    setState(() {
+      displayListWho = whoList;
+    });
+
+    // close all connections
+    await conn.close();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,35 +197,33 @@ class _WhoPageState extends State<WhoPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    flex: 1,
-                    child: SingleChildScrollView(
+                      flex: 1,
                       child: Column(
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: OutlinedButton(
-                              onPressed: _paysInvolved,
-                              child: const Text('Show Pays Involved'),
+                              onPressed: _orgInvolved,
+                              child: const Text('Show and Select Organizations Involved'),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Wrap(
                               spacing: 5.0,
-                              children: displayListPays.map<Widget>((data) {
+                              children: displayListOrg.map<Widget>((data) {
                                 return FilterChip(
-                                  label: Text(data['selectedPays'] ?? ""),
-                                  //selected: _filtersP.contains(data['selectedId']! + data['selectedWho']!),
-                                  selected: _filtersPays.contains(data['selectedPays']!),
+                                  label: Text(data['selectedOrg'] ?? ""),
+                                  selected: _filtersOrg.contains(data['selectedOrg']!),
                                   onSelected: (bool value) {
                                     setState(() {
                                       if (value) {
-                                        if (!_filtersPays.contains(data['selectedPays']!)) {
-                                          _filtersPays.add(data['selectedPay']!);
+                                        if (!_filtersOrg.contains(data['selectedOrg']!)) {
+                                          _filtersOrg.add(data['selectedOrg']!);
                                         }
                                       } else {
-                                        _filtersPays.removeWhere((String who) {
-                                          return who == data[data['selectedPays']]!;
+                                        _filtersOrg.removeWhere((String who) {
+                                          return who == data[data['selectedOrg']]!;
                                         });
                                       }
                                     });
@@ -141,132 +233,94 @@ class _WhoPageState extends State<WhoPage> {
                             ),
                           ),
                           Text(
-                            'Selected: ${_filtersPays.join(', ')}',
+                            'Selected: ${_filtersOrg.join(', ')}',
                             style: const TextStyle(
                               fontSize: 20,
                               color: Colors.yellow,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-                          /*
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: OutlinedButton(
-                              onPressed: _payInvolved,
-                              child: const Text('Show Participants'),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Wrap(
-                              spacing: 5.0,
-                              children: displayListPay.map<Widget>((data) {
-                                return FilterChip(
-                                  label: Text(data['selectedWho'] ?? ""),
-                                  //selected: _filtersP.contains(data['selectedId']! + data['selectedWho']!),
-                                  selected: _filtersPay.contains(data['selectedWho']!),
-                                  onSelected: (bool value) {
-                                    setState(() {
-                                      if (value) {
-                                        if (!_filtersPay.contains(data['selectedWho']!)) {
-                                          _filtersPay.add(data['selectedWho']!);
-                                        }
-                                      } else {
-                                        _filtersPay.removeWhere((String who) {
-                                          return who == data[data['selectedWho']]!;
-                                        });
-                                      }
-                                    });
-                                  },
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                          Text(
-                            'Selected: ${_filtersPay.join(', ')}',
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.yellow,
-                            ),
-                          ),
-                          const SizedBox(height: 5.0),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Wrap(
-                              spacing: 5.0,
-                              children: displayListPay.map<Widget>((data) {
-                                return FilterChip(
-                                  label: Text(data['selectedWho'] ?? ""),
-                                  //selected: _filtersP.contains(data['selectedId']! + data['selectedWho']!),
-                                  selected: _filtersPay.contains(data['selectedWho']!),
-                                  onSelected: (bool value) {
-                                    setState(() {
-                                      if (value) {
-                                        if (!_filtersPay.contains(data['selectedWho']!)) {
-                                          _filtersPay.add(data['selectedWho']!);
-                                        }
-                                      } else {
-                                        _filtersPay.removeWhere((String who) {
-                                          return who == data[data['selectedWho']]!;
-                                        });
-                                      }
-                                    });
-                                  },
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                          const SizedBox(height: 10.0),
-                          Text(
-                            'Selected: ${_filtersPay.join(', ')}',
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.yellow,
-                            ),
-
-                          ),
-
-                           */
-                        ],
-                      )
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-/*
                           Padding(
                             padding: const EdgeInsets.all(30.0),
                             child: TffFormat(
-                              hintText: 'a new participant you want',
+                              hintText: 'a New Organization You Want',
                               onChanged: (text) {
-                                newWho = text;
+                                newOrg = text;
                               },
                               tffColor1: Colors.black54,
-                              tffColor2: Colors.grey,
+                              tffColor2: const Color(0x99e6e6fa),
                             ),
                           ),
-                          OutlinedButton(
-                            onPressed: _insert,
-                            child: const Text('Add a New Participant'),
+                          OutlinedButton (
+                            onPressed: _insertOrg,
+                            child: const Text('Add a New Organization'),
                           )
                         ],
                       )
                   ),
-
- */
-                ],
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: OutlinedButton(
+                              onPressed: _whoInvolved,
+                              child: const Text('Show and Select People Involved'),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Wrap(
+                              spacing: 5.0,
+                              children: displayListWho.map<Widget>((data) {
+                                return FilterChip(
+                                  label: Text(data['selectedWho'] ?? ""),
+                                  selected: _filtersWho.contains(data['selectedWho']!),
+                                  onSelected: (bool value) {
+                                    setState(() {
+                                      if (value) {
+                                        if (!_filtersWho.contains(data['selectedWho']!)) {
+                                          _filtersWho.add(data['selectedWho']!);
+                                        }
+                                      } else {
+                                        _filtersWho.removeWhere((String who) {
+                                          return who == data[data['selectedWho']]!;
+                                        });
+                                      }
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          Text(
+                            'Selected: ${_filtersWho.join(', ')}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.yellow,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(30.0),
+                            child: TffFormat(
+                              hintText: 'a New Person You Want',
+                              onChanged: (text) {
+                                newWho = text;
+                              },
+                              tffColor1: Colors.black54,
+                              tffColor2: const Color(0x99e6e6fa),
+                            ),
+                          ),
+                          OutlinedButton(
+                            onPressed: _insertWho,
+                            child: const Text('Add a New Person'),
+                          )
+                          ],
               ),
             ),
-            ]))
-      )),
+            ]
+          )
+            )),),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           showDialog<void>(
@@ -286,9 +340,13 @@ class _WhoPageState extends State<WhoPage> {
                 );
               });
 
-          confirm.selectedWho = _filtersPays;
-          confirm.selectedWhoId = _filtersPays;
-          print ("$_filtersPays");
+          confirm.selectedOrg = _filtersOrg;
+          confirm.selectedOrgId = _filtersOrg;
+          print ("$_filtersOrg");
+
+          confirm.selectedWho = _filtersWho;
+          confirm.selectedWhoId = _filtersWho;
+          print ("$_filtersWho");
         },
         label: const Text('Temporarily Save'),
       ),

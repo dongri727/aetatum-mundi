@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../cover_page.dart';
 import '../domain/custom_page_route.dart';
+import 'index_page.dart';
 
 
 class ThreeDViewPage extends StatelessWidget {
@@ -22,7 +22,7 @@ class ThreeDViewPage extends StatelessWidget {
             Navigator.push<String>(
               context,
               CustomPageRoute(
-                const CoverPage(),
+                const IndexPage(),
               ),
             );
           },
