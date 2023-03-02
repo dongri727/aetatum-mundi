@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/formats.dart';
-import '../../domain/confirm.dart';
+import 'confirm/confirm.dart';
 
 class WhatPage extends StatefulWidget {
   const WhatPage({Key? key}) : super(key: key);
@@ -27,38 +27,17 @@ class _WhatPageState extends State<WhatPage> {
                   fit: BoxFit.cover,
                 )
             ),
-            child: Center(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
-                        child: TffFormat(
-                          hintText: "Event",
-                          onChanged: (text) {
-                            newName = text;
-                          },
-                            tffColor1: const Color(0xFF2f4f4f),
-                            tffColor2: const Color(0x99e6e6fa),
-                        )
-                    ),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [],
-                      )
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [],
-                      )
-                  ),
-                ],
-              ),
+            alignment: Alignment.topCenter,
+            child: Padding(
+                padding: const EdgeInsets.fromLTRB(300, 100, 300, 20),
+                child: TffFormat(
+                  hintText: "Event",
+                  onChanged: (text) {
+                    newName = text;
+                  },
+                    tffColor1: const Color(0xFF2f4f4f),
+                    tffColor2: const Color(0x99e6e6fa),
+                )
             ),
           )),
 

@@ -1,10 +1,12 @@
+import 'package:aetatum_mundi/domain/show_chips.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mysql_client/mysql_client.dart';
 
 import '../../domain/.words.dart';
 import '../../domain/formats.dart';
-import '../../domain/confirm.dart';
+import 'confirm/confirm.dart';
 import '../../domain/country.dart';
 
 import 'dart:math' as math;
@@ -241,6 +243,7 @@ class _WherePageState extends State<WherePage> {
 
   List<Map<String, String>> displayListATT = [];
   final List<String> _filtersATT = <String>[];
+  
 
   Future<void> _place() async {
     // create connection
@@ -269,6 +272,7 @@ class _WherePageState extends State<WherePage> {
 
     setState(() {
       displayListPlace = placeList;
+      
     });
 
     // close all connections
@@ -287,19 +291,19 @@ class _WherePageState extends State<WherePage> {
 
     await conn.connect();
 
-    // insert some rows to ATT
+    // insert some rows to Place
     var res = await conn.execute(
       "INSERT INTO Places (id, place) VALUES (:id, :place)",
       <String, dynamic>{
         "id": null,
-        "pays": newPlace,
+        "place": newPlace,
       },
     );
 
-    print('ATT inserted');
+    print('Place inserted');
 
     // select countries involved
-    var result = await conn.execute("SELECT id, att FROM AtThatTime ORDER BY att");
+    var result = await conn.execute("SELECT id,place FROM Places ORDER BY place");
 
     // make list with query result
     List<Map<String, String>> placeList = [];
@@ -375,7 +379,7 @@ class _WherePageState extends State<WherePage> {
 
     print('ATT inserted');
 
-    // select countries involved
+    // select ATT involved
     var result = await conn.execute("SELECT id, att FROM AtThatTime ORDER BY att");
 
     // make list with query result
@@ -489,27 +493,19 @@ class _WherePageState extends State<WherePage> {
                               child: const Text('Show and Select Current Place'),
                             ),
                           ),
-                          Text(
-                            'Selected: ${_filtersPlace.join(', ')}',
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.yellow,
-                            ),
-                          ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Wrap(
                               spacing: 5.0,
                               children: displayListPlace.map<Widget>((data) {
-                                return FilterChip(
+                                return ChoiceChip(
                                   label: Text(data['selectedPlace'] ?? ""),
                                   selected: _filtersPlace.contains(data['selectedPlace']!),
                                   onSelected: (bool value) {
                                     setState(() {
                                       if (value) {
-                                        if (!_filtersPlace.contains(data['selectedPlace']!)) {
+                                        _filtersPlace.clear();
                                           _filtersPlace.add(data['selectedPlace']!);
-                                        }
                                       } else {
                                         _filtersPlace.removeWhere((String who) {
                                           return who == data[data['selectedPlace']]!;
@@ -546,15 +542,8 @@ class _WherePageState extends State<WherePage> {
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: OutlinedButton(
-                              onPressed: _place,
+                              onPressed: _att,
                               child: const Text('Show and Select Country, Place at that time'),
-                            ),
-                          ),
-                          Text(
-                            'Selected: ${_filtersATT.join(', ')}',
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.yellow,
                             ),
                           ),
                           Padding(
@@ -562,15 +551,14 @@ class _WherePageState extends State<WherePage> {
                             child: Wrap(
                               spacing: 5.0,
                               children: displayListATT.map<Widget>((data) {
-                                return FilterChip(
+                                return ChoiceChip(
                                   label: Text(data['selectedATT'] ?? ""),
                                   selected: _filtersATT.contains(data['selectedATT']!),
                                   onSelected: (bool value) {
                                     setState(() {
                                       if (value) {
-                                        if (!_filtersATT.contains(data['selectedATT']!)) {
+                                        _filtersATT.clear();
                                           _filtersATT.add(data['selectedATT']!);
-                                        }
                                       } else {
                                         _filtersATT.removeWhere((String who) {
                                           return who == data[data['selectedATT']]!;

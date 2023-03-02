@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../domain/.words.dart';
 import '../../domain/formats.dart';
-import '../../domain/confirm.dart';
+import 'confirm/confirm.dart';
 
 class WhoPage extends StatefulWidget {
   const WhoPage({Key? key}) : super(key: key);

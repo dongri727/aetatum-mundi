@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../domain/.words.dart';
 import '../../domain/formats.dart';
-import '../../domain/confirm.dart';
+import 'confirm/confirm.dart';
 
 class PaysPage extends StatefulWidget {
   const PaysPage({Key? key}) : super(key: key);
@@ -17,9 +17,11 @@ class _PaysPageState extends State<PaysPage> {
 
   List<Map<String, String>> displayListPays = [];
   final List<String> _filtersPays = <String>[];
+  final List<String> _filtersPaysId = <String>[];
 
   List<Map<String, String>> displayListATT = [];
   final List<String> _filtersATT = <String>[];
+  final List<String> _filtersATTId = <String>[];
 
   Future<void> _paysInvolved() async {
     // create connection
@@ -28,7 +30,7 @@ class _PaysPageState extends State<PaysPage> {
       port: 3306,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -62,7 +64,7 @@ class _PaysPageState extends State<PaysPage> {
       port: 3306,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -97,7 +99,7 @@ class _PaysPageState extends State<PaysPage> {
       port: 3306,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -107,7 +109,7 @@ class _PaysPageState extends State<PaysPage> {
       "INSERT INTO AtThatTime (id, att) VALUES (:id, :att)",
       <String, dynamic>{
         "id": null,
-        "pays": newATT,
+        "att": newATT,
       },
     );
 
@@ -183,9 +185,16 @@ class _PaysPageState extends State<PaysPage> {
                                             if (!_filtersPays.contains(data['selectedPays']!)) {
                                               _filtersPays.add(data['selectedPays']!);
                                             }
+                                            if (!_filtersPaysId.contains(data['selectedPaysId']!)) {
+                                              _filtersPaysId.add(data['selectedPaysId']!);
+                                            }
+
                                           } else {
-                                            _filtersPays.removeWhere((String who) {
-                                              return who == data[data['selectedPays']]!;
+                                            _filtersPays.removeWhere((String pays) {
+                                              return pays == data[data['selectedPays']]!;
+                                            });
+                                            _filtersPaysId.removeWhere((String id) {
+                                              return id == data[data['selectedPaysId']]!;
                                             });
                                           }
                                         });
@@ -223,9 +232,15 @@ class _PaysPageState extends State<PaysPage> {
                                             if (!_filtersATT.contains(data['selectedATT']!)) {
                                               _filtersATT.add(data['selectedATT']!);
                                             }
+                                            if(!_filtersATTId.contains(data['selectedATTId']!)){
+                                              _filtersATTId.add(data['selectedATTId']!);
+                                            }
                                           } else {
                                             _filtersATT.removeWhere((String who) {
                                               return who == data[data['selectedATT']]!;
+                                            });
+                                            _filtersATTId.removeWhere((String id) {
+                                              return id == data[data['selectedATTId']]!;
                                             });
                                           }
                                         });
@@ -283,12 +298,13 @@ class _PaysPageState extends State<PaysPage> {
               });
 
           confirm.selectedPays = _filtersPays;
-          confirm.selectedPaysId = _filtersPays;
-          print ("$_filtersPays");
+          confirm.selectedPaysId = _filtersPaysId;
+          print ("$_filtersPaysId");
+
 
           confirm.selectedATT = _filtersATT;
-          confirm.selectedATTId = _filtersATT;
-          print ("$_filtersATT");
+          confirm.selectedATTId = _filtersATTId;
+          print ("$_filtersATTId");
 
         },
         label: const Text('Temporarily Save'),

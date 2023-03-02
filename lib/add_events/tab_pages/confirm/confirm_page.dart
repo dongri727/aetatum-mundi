@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../domain/card_format.dart';
-import '../../../domain/confirm.dart';
+import 'confirm.dart';
 import '../../../domain/formats.dart';
 import 'confirm_model.dart';
 

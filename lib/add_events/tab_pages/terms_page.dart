@@ -5,7 +5,7 @@ import 'package:mysql_client/mysql_client.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/formats.dart';
-import '../../domain/confirm.dart';
+import 'confirm/confirm.dart';
 
 class TermsPage extends StatefulWidget {
   const TermsPage({Key? key}) : super(key: key);

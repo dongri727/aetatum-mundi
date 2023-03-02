@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../domain/confirm.dart';
+import 'tab_pages/confirm/confirm.dart';
 import 'tab_pages/pays_page.dart';
 import 'tab_pages/preview_page.dart';
 import 'tab_pages/terms_page.dart';

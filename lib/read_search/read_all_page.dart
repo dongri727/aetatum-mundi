@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mysql_client/mysql_client.dart';
 
 import '../domain/.words.dart';
+import 'detail_page.dart';
 import 'update_page.dart';
 
 class ReadAllPage extends StatefulWidget {
@@ -126,7 +127,7 @@ class _ReadAllPageState extends State<ReadAllPage> {
                   Column(children: displayList.map<Widget>((data) {
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(150, 0, 150, 0),
-                      child: Card(color: Colors.indigo,
+                      child: Card(color: const Color(0x4D6b8e23),
                           elevation: 10,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -135,11 +136,11 @@ class _ReadAllPageState extends State<ReadAllPage> {
                               title: Text(data['selectedName']?? ""),
                               subtitle: Text(data['selectedCountry']?? ""),
                               trailing: TextButton(
-                                child: const Text("update"),
+                                child: const Text("detail"),
                                 onPressed: () {
                                   Navigator.push<int>(
                                     context,
-                                    MaterialPageRoute(builder: (context) => UpdatePage(title: data['selectedId']??"")),
+                                    MaterialPageRoute(builder: (context) => DetailPage(title: data['selectedId']??"")),
                                   );
                                 },
                               ),

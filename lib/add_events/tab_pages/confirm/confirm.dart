@@ -21,11 +21,11 @@ class Confirm{
   double? y = 0.0;
   double? z = 0.0;
 
-  //pay involved
+  //pays involved
   List<String> selectedPays = [];
   List<String> selectedPaysId = [];
 
-  //pay involved at that time
+  //pays involved at that time
   List<String> selectedATT = [];
   List<String> selectedATTId = [];
 

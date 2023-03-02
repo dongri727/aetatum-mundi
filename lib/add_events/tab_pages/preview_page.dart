@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../domain/confirm.dart';
+import 'confirm/confirm.dart';
 import 'confirm/confirm_model.dart';
 import 'confirm/confirm_page.dart';
 
