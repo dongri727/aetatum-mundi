@@ -32,11 +32,11 @@ class _SearchPageState extends State<SearchPage> {
 
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();

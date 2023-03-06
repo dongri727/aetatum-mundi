@@ -16,8 +16,8 @@ class ConfirmModel extends ChangeNotifier {
 
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
       databaseName: DATABASE,
@@ -73,7 +73,7 @@ class ConfirmModel extends ChangeNotifier {
         print(lastInsertedPlaceID);
       }
 
-      // Insert $period_id and place_id into place$period table
+      // Insert periodId and placeId into place$period table
       var resultPlacePeriod = await conn.execute(
         "INSERT INTO Places$period (id, periodId, placeId) VALUE (:id, :periodId, :placeId)",
         <String, dynamic>{
@@ -106,7 +106,7 @@ class ConfirmModel extends ChangeNotifier {
         print(lastInsertedDateID);
       }
 
-      // Insert $periodId and dateId into jour$period table
+      // Insert periodId and dateId into jour$period table
       var resultDatePeriod = await conn.execute(
           "INSERT INTO Jour$period (id, periodId, dateId) VALUES (:id, periodId ,dateId)",
           <String, dynamic>{
@@ -119,6 +119,37 @@ class ConfirmModel extends ChangeNotifier {
       var lastInsertedDatePeriodID = resultDatePeriod;
       if (kDebugMode) {
         print(lastInsertedDatePeriodID);
+      }
+    }
+
+    //if att data exist, insert att data into att table
+    if(confirm.att != null) {
+      var resultATT = await conn.execute(
+          "INSERT INTO AtThatTime (id, att) VALUES (:id, :att)",
+          <String, dynamic>{
+            "id": null,
+            "date": confirm.att,
+          }
+      );
+      //get att ID
+      var lastInsertedATTID = resultATT.lastInsertID;
+      if (kDebugMode) {
+        print(lastInsertedATTID);
+      }
+
+      // Insert periodId and dateId into att$period table
+      var resultDatePeriod = await conn.execute(
+          "INSERT INTO AtThatTime$period (id, periodId, attId) VALUES (:id, periodId ,attId)",
+          <String, dynamic>{
+            "id": null,
+            "periodId": resultEvent.lastInsertID,
+            "attId": lastInsertedATTID,
+          }
+      );
+      //confirm ATTPeriod ID
+      var lastInsertedATTPeriodID = resultDatePeriod;
+      if (kDebugMode) {
+        print(lastInsertedATTPeriodID);
       }
     }
 
@@ -233,24 +264,36 @@ class ConfirmModel extends ChangeNotifier {
     //ALL
     //todo 詳細表示を迅速にするための、すべてを一括管理するtableは必要か。
     var resultALLPeriod = await conn.execute(
-        "INSERT INTO ALL$period (id, annee, afaire, pays, place, latitude, longitude, date, dateLocal,) "
-            "VALUE (:id, :annee, :affair, :pays, :place, :latitude, :longitude, :date, :dateLocal)",
+        "INSERT INTO ALL$period (id, annee, afaire, att, pays, place, latitude, longitude, date, dateLocal, "
+            "paysInvolved, attInvolved, orgInvolved, peopleInvolved, category, term) "
+            "VALUE (:id, :annee, :affair, :pays, :att, :place, :latitude, :longitude, :date, :dateLocal,"
+            " :paysInvolved, :attInvolved, :orgInvolved, :peopleInvolved, :category, term)",
       <String, dynamic> {
-        "id": null,
+        "id": lastInsertedPeriodID,
         "annee": confirm.year,
         "affair": confirm.name,
         "pays": confirm.country,
+        "att": confirm.att,
         "place": confirm.place,
         "latitude": confirm.latitude,
         "longitude": confirm.longitude,
         "date": confirm.date,
         "dateLocal": confirm.dateLocal,
-
+        "paysInvolved": confirm.selectedPays.join(','),
+        "attInvolved": confirm.selectedATT.join(','),
+        "orgInvolved": confirm.selectedOrg.join(','),
+        "peopleInvolved": confirm.selectedWho.join(','),
+        "category": confirm.selectedCategory.join(','),
+        "term": confirm.selectedTerm.join(','),
       }
     );
 
+    //get ALL ID
+    var lastInsertedALLPeriodID = resultALLPeriod.lastInsertID;
+    if (kDebugMode) {
+      print(lastInsertedALLPeriodID);
+    }
 
-    
     // close all connections
     await conn.close();
   }

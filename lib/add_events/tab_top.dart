@@ -35,11 +35,11 @@ class TabPage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: SafeArea(
+            child: const SafeArea(
               child: DefaultTabController(
                 length: 7,
                 child: Column(
-                  children: const [
+                  children: [
                     TabBar(
                       labelColor: Colors.white,
                       indicatorColor: Colors.yellow,
@@ -61,7 +61,7 @@ class TabPage extends StatelessWidget {
                           WhenPage(), // いつ？
                           WhatPage(), // なにが？
                           WherePage(), // どこで？
-                          PaysPage(),
+                          PaysPage(),//関係国
                           WhoPage(), // だれ？
                           TermsPage(), // 検索語
                           PreviewPage(), // プレビュー

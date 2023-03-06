@@ -26,8 +26,8 @@ class _PaysPageState extends State<PaysPage> {
   Future<void> _paysInvolved() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
       databaseName: DATABASE,
@@ -60,8 +60,8 @@ class _PaysPageState extends State<PaysPage> {
   Future<void> _attInvolved() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
       databaseName: DATABASE,
@@ -95,8 +95,8 @@ class _PaysPageState extends State<PaysPage> {
   Future<void> _insertATT() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
       databaseName: DATABASE,

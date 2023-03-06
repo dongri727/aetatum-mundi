@@ -24,11 +24,11 @@ class _WhoPageState extends State<WhoPage> {
   Future<void> _orgInvolved() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -59,11 +59,11 @@ class _WhoPageState extends State<WhoPage> {
   Future<void> _insertOrg() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -104,11 +104,11 @@ class _WhoPageState extends State<WhoPage> {
   Future<void> _whoInvolved() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -139,11 +139,11 @@ class _WhoPageState extends State<WhoPage> {
   Future<void> _insertWho() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();

@@ -6,13 +6,13 @@ class MundiTheme {
     titleLarge:GoogleFonts.kalam(
         fontSize: 100, fontWeight: FontWeight.bold, color: const Color(0xFF006400)),//green
     titleMedium: GoogleFonts.kalam(
-        fontSize: 80, fontWeight: FontWeight.bold, color: const Color(0xFF006400)),
+        fontSize: 80, fontWeight: FontWeight.bold, color: const Color(0xFF006400)),//green
     titleSmall: GoogleFonts.kalam(
-        fontSize: 60, fontWeight: FontWeight.bold, color: const Color(0xFF006400)),
+        fontSize: 60, fontWeight: FontWeight.bold, color: const Color(0xFF006400)),//green
     headlineLarge: GoogleFonts.kalam(
-        fontSize: 50, fontWeight: FontWeight.bold, color: const Color(0xFF006400)),
+        fontSize: 50, fontWeight: FontWeight.bold, color: const Color(0xFF006400)),//green
     headlineMedium: GoogleFonts.kalam(
-        fontSize: 20, fontWeight: FontWeight.normal, color: const Color(0xFFf5f5f5)),
+        fontSize: 20, fontWeight: FontWeight.normal, color: const Color(0xFFf5f5f5)),//white
     headlineSmall: GoogleFonts.kalam(
         fontSize: 18, fontWeight: FontWeight.normal, color: const Color(0xFFa9a9a9)),
     bodyLarge: GoogleFonts.kalam(

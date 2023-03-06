@@ -1,5 +1,4 @@
 import 'package:aetatum_mundi/domain/.words.dart';
-//import 'package:aetatum_mundi/domain/chips_format.dart';
 import 'package:flutter/material.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +24,11 @@ class _TermsPageState extends State<TermsPage> {
   Future<void> _term() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -60,11 +59,11 @@ class _TermsPageState extends State<TermsPage> {
   Future<void> _insertTerm() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -105,11 +104,11 @@ class _TermsPageState extends State<TermsPage> {
   Future<void> _category() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -140,11 +139,11 @@ class _TermsPageState extends State<TermsPage> {
   Future<void> _insertCategory() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();

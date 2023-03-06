@@ -4,7 +4,6 @@ import 'package:mysql_client/mysql_client.dart';
 
 import '../domain/.words.dart';
 import 'detail_page.dart';
-import 'update_page.dart';
 
 class ReadAllPage extends StatefulWidget {
   const ReadAllPage({Key? key,required this.title}) : super(key: key);
@@ -24,11 +23,11 @@ class _ReadAllPageState extends State<ReadAllPage> {
 
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -47,9 +46,9 @@ class _ReadAllPageState extends State<ReadAllPage> {
     for (final row in result.rows) {
       final data = {
         'selectedId': row.colAt(0)!,
-        'selectedYear': row.colAt(1)!,
-        'selectedName': row.colAt(2)!,
-        'selectedCountry': row.colAt(3)!
+        'selectedAnnee': row.colAt(1)!,
+        'selectedAffair': row.colAt(2)!,
+        'selectedPays': row.colAt(3)!
       };
       list.add(data);
     }
@@ -78,7 +77,6 @@ class _ReadAllPageState extends State<ReadAllPage> {
         title: Text(widget.title),
       ),
       body: Container(
-        //constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/main.png'),

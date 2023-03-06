@@ -45,6 +45,4 @@ class Confirm{
   List<String> selectedCategory = [];
   List<String> selectedCategoryId = [];
 
-  final int confirmId = 0;
-
 }

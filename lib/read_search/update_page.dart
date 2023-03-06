@@ -23,11 +23,11 @@ class _UpdatePageState extends State<UpdatePage> {
 
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum", // optional
+      databaseName: DATABASE, // optional
     );
 
     await conn.connect();
@@ -66,7 +66,7 @@ class _UpdatePageState extends State<UpdatePage> {
         child: Center(
           child: Row(
             children: [
-              Expanded(
+              const Expanded(
                   flex: 1,
                   child: Column(
                     children: [],
@@ -115,7 +115,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   ],
                 ),
               ),
-              Expanded(
+              const Expanded(
                   flex: 1,
                   child: Column(
                     children: [],

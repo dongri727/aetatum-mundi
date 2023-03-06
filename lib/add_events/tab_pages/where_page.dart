@@ -1,5 +1,3 @@
-import 'package:aetatum_mundi/domain/show_chips.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mysql_client/mysql_client.dart';
@@ -7,7 +5,6 @@ import 'package:mysql_client/mysql_client.dart';
 import '../../domain/.words.dart';
 import '../../domain/formats.dart';
 import 'confirm/confirm.dart';
-import '../../domain/country.dart';
 
 import 'dart:math' as math;
 
@@ -248,11 +245,11 @@ class _WherePageState extends State<WherePage> {
   Future<void> _place() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -282,11 +279,11 @@ class _WherePageState extends State<WherePage> {
   Future<void> _insertPlace() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -326,11 +323,11 @@ class _WherePageState extends State<WherePage> {
   Future<void> _att() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
@@ -359,11 +356,11 @@ class _WherePageState extends State<WherePage> {
   Future<void> _insertATT() async {
     // create connection
     final conn = await MySQLConnection.createConnection(
-      host: "127.0.0.1",
-      port: 3306,
+      host: HOST,
+      port: PORT,
       userName: NAME,
       password: PASSWORD,
-      databaseName: "aetatum",
+      databaseName: DATABASE,
     );
 
     await conn.connect();
